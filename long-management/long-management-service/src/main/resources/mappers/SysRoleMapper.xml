@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.console.settings.dao.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.isylph.console.settings.model.SysRolePO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="role" property="role" />
+        <result column="remark" property="remark" />
+        <result column="sys" property="sys" />
+        <result column="member" property="member" />
+    </resultMap>
+
+    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.role.SysRoleVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="role" property="role" />
+        <result column="remark" property="remark" />
+        <result column="sys" property="sys" />
+        <result column="member" property="member" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, `name`, `role`, remark, sys, `member`
+    </sql>
+    <select id="selectViewListPage" resultMap="VoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        <where>
+            id > 1
+            <if test="name != null and name != ''">
+               and  `name` like concat('%',#{name},'%')
+            </if>
+        </where>
+        <if test="offset != null or cnt != null">
+            limit
+            <if test="offset != null">
+                #{offset},
+            </if>
+            <if test="cnt != null">
+                #{cnt}
+            </if>
+        </if>
+    </select>
+    <select id="countSelectViewListPage" resultType="java.lang.Integer">
+        select count(*) from sys_role
+        <where>
+            id > 1
+            <if test="name != null and name != ''">
+                and `name` like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.console.settings.dao.SysRoleUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.role.SysRoleUserVO">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="role_id" property="roleId" />
+    </resultMap>
+
+    <resultMap id="RoleVoResultMap" type="com.isylph.console.api.beans.system.role.SysRoleVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="role" property="role" />
+        <result column="remark" property="remark" />
+        <result column="sys" property="sys" />
+        <result column="member" property="member" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, role_id
+    </sql>
+
+    <sql id="OperatorVoResultList">
+        id, account, `name`, remark
+    </sql>
+    <delete id="deleteByRoleId">
+        delete from sys_role_user where role_id = #{roleId}
+    </delete>
+
+    <select id="getUserRoles" resultMap="RoleVoResultMap">
+        SELECT
+            id,
+            `NAME`,
+            role,
+            remark,
+            sys,
+            `member`
+        FROM
+             sys_role  sr
+        WHERE
+            EXISTS(
+            SELECT * FROM sys_role_user sru WHERE sr.id = sru.role_id and sru.user_id = #{userId}
+            )
+    </select>
+
+    <select id="listUserByRoleId" resultMap="VoResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM sys_role_user WHERE role_id = #{roleId}
+    </select>
+
+</mapper>

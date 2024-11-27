@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>long-management</artifactId>
+        <groupId>com.isylph</groupId>
+        <version>0.0.5-SNAPSHOT</version>
+    </parent>
+    <artifactId>long-management-web</artifactId>
+    <packaging>jar</packaging>
+    <name>long-management-web</name>
+    <dependencies>
+        <!-- 工程内依赖 -->
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-department-application</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-operator-application</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-management-service</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-aux-error-service</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-util-json</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-util-http</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-basis-web-quickstart</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-basis-security</artifactId>
+            <version>${def_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <!-- dubbo -->
+
+        <!-- Json XML -->
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+	<!-- jstl -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <!--  <plugin>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-maven-plugin</artifactId>
+              </plugin>-->
+            <!-- 打包时跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

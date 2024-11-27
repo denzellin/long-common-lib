@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.error.dao.AuxErrorMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.isylph.error.model.AuxErrorMessagePO">
+        <id column="id" property="id" />
+        <result column="module" property="module" />
+        <result column="key" property="key" />
+        <result column="message" property="message" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, `module`, `key`, message, remark
+    </sql>
+
+    <insert id="saveError">
+        INSERT INTO aux_error_code (`id`,  `module`, `key`, `message`) VALUES (#{id},  #{module}, #{key}, #{message});
+    </insert>
+
+    <select id="selectViewListPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from aux_error_code
+        <where>
+            <if test="module != null and module != ''">
+                `module` like concat('%', #{module}, '%')
+            </if>
+        </where>
+        <if test="offset != null or cnt != null">
+            limit
+            <if test="offset != null">
+                #{offset},
+            </if>
+            <if test="cnt != null">
+                #{cnt}
+            </if>
+        </if>
+    </select>
+    <select id="countSelectViewListPage" resultType="java.lang.Integer">
+        select count(*) from aux_error_code
+        <where>
+            <if test="module != null and module != ''">
+                `module` like concat('%', #{module}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

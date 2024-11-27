@@ -1,0 +1,20 @@
+
+
+sms:
+  task:
+    #发送短信线程的数量
+    thread: 1
+    #短信服务商, aliSmsClient: 阿里云
+    service: aliSmsClient
+  threshold:
+    #同一个号码发送短信的最小间隔, 秒
+    interval: 60
+    daily-count: 20
+    #发送失败时的重试
+    retry-on-fail: 3
+
+  ali:
+    region-id: cn-hangzhou
+    access-key-id: access-key-id
+    secret: secret
+    signature: 签名

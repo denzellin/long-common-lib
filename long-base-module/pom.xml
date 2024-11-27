@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>long-common-lib</artifactId>
+        <groupId>com.isylph</groupId>
+        <version>0.0.5-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>long-base-module</artifactId>
+    <packaging>pom</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>long-basis-application</module>
+        <module>long-basis-domain</module>
+        <module>long-basis-rpc-http</module>
+        <module>long-basis-persistence</module>
+        <module>long-basis-controller</module>
+        <module>long-basis-security</module>
+        <module>long-basis-mapstruct</module>
+        <module>long-basis-web-quickstart</module>
+    </modules>
+
+</project>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.console.settings.dao.SysRoleFuncMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.role.SysRoleFuncVO">
+        <id column="id" property="id" />
+        <result column="role_id" property="roleId" />
+        <result column="func_id" property="funcId" />
+    </resultMap>
+    <resultMap id="RoleFuncVoResultMap" type="com.isylph.console.api.beans.system.func.SysFuncVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="active" property="active" />
+        <result column="group_id" property="groupId" />
+        <result column="url" property="url" />
+        <result column="method" property="method" />
+    </resultMap>
+
+    <resultMap id="RolesResultMap" type="com.isylph.console.api.beans.system.role.SysRoleVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="role" property="role" />
+        <result column="remark" property="remark" />
+        <result column="`sys`" property="sys" />
+        <result column="`member`" property="member" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="RolesResultList">
+        id, `name`, `role`, remark, `sys`, `member`
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="RoleFuncVoResultList">
+        id, `name`, active, group_id, url, `method`
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, gmt_create, gmt_modified, role_id, func_id
+    </sql>
+    <delete id="deleteByRoleId">
+        delete from sys_role_func where role_id = #{roleId}
+    </delete>
+
+
+    <select id="listRoleFunc" resultMap="RoleFuncVoResultMap">
+        select
+        <include refid="RoleFuncVoResultList"/>
+        from sys_func sf
+        where
+        exists (
+        select role_id  from sys_role_func srf
+        where srf.func_id = sf.id and srf.role_id = #{roleId}
+        )
+        order by group_id asc
+    </select>
+    <select id="listAllFunc" resultMap="RoleFuncVoResultMap">
+        select
+        <include refid="RoleFuncVoResultList"/>
+        from sys_func
+        order by group_id asc
+    </select>
+    <select id="listRolesFuncs" resultMap="RoleFuncVoResultMap">
+        select
+        <include refid="RoleFuncVoResultList"/>
+        from sys_func sf
+        where
+        exists (
+        select role_id  from sys_role_func srf
+        where srf.func_id = sf.id and srf.role_id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+    </select>
+    <select id="listRolesByFunc" resultMap="RolesResultMap">
+        select
+        <include refid="RolesResultList"/>
+        from sys_role sr WHERE EXISTS (
+        SELECT
+        role_id
+        FROM
+        sys_role_func srf
+        WHERE
+        srf.role_id = sr.id and srf.func_id = #{funcId}
+        )
+    </select>
+
+</mapper>

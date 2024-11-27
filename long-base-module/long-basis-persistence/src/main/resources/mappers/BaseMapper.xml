@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.basis.persistence.dao.BaseMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Pagination_Filter">
+        <if test="offset != null or cnt != null">
+            limit
+            <if test="offset != null">
+                #{offset},
+            </if>
+            <if test="cnt != null">
+                #{cnt}
+            </if>
+        </if>
+    </sql>
+
+
+
+    <!--
+    <include refid="com.isylph.basis.persistence.dao.BaseMapper.Base_Pagination_Filter" />
+    -->
+</mapper>

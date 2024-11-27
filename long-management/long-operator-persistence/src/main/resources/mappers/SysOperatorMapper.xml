@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.operator.persistence.dao.SysOperatorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.isylph.operator.persistence.model.SysOperatorPO">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="org_id" property="orgId" />
+        <result column="account" property="account" />
+        <result column="mobile" property="mobile" />
+        <result column="email" property="email" />
+        <result column="avatar" property="avatar" />
+        <result column="signature" property="signature" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="password" property="password" />
+        <result column="salt" property="salt" />
+        <result column="type" property="type" />
+        <result column="status" property="status" />
+        <result column="remark" property="remark" />
+        <result column="org_code" property="orgCode" />
+        <result column="permission_code" property="permissionCode" />
+        <result column="is_deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, create_time, update_time, org_id, account, mobile, email, avatar, signature,
+        title, `name`, password, salt, `type`, status, remark, org_code, permission_code, is_deleted
+    </sql>
+
+    <sql id="filter">
+        id > 10 and is_deleted = 0
+        <if test="orgId != null">
+            and org_id = #{orgId}
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        <if test="name != null and name != ''">
+            and `name` like concat('%',#{name},'%')
+        </if>
+        <if test="account != null">
+            and account like concat('%',#{account},'%')
+        </if>
+        <if test="permissionCode != null and permissionCode != ''">
+            and org_code like concat(#{permissionCode},'%')
+        </if>
+    </sql>
+
+
+    <select id="selectViewListPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_operator
+        <where>
+            <include refid="filter"/>
+        </where>
+        <include refid="com.isylph.basis.persistence.dao.BaseMapper.Base_Pagination_Filter" />
+    </select>
+    <select id="countSelectViewListPage" resultType="java.lang.Integer">
+        select count(*) from sys_operator
+        <where>
+            <include refid="filter"/>
+        </where>
+    </select>
+    <select id="selectByAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_operator
+        where account = #{account} and is_deleted = 0
+    </select>
+    <select id="getByAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_operator
+        where account= #{account} and is_deleted = 0
+    </select>
+    <select id="getByAccountId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_operator
+        where id= #{accountId}
+    </select>
+
+</mapper>

@@ -1,0 +1,18 @@
+#RabbitMQ 配置DEMO
+rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  virtual-host: /
+  username: admin
+  password: guest
+  exchanger: exchanger
+
+  # 生产者配置
+  producer:
+    default: false
+
+  # 消费者配置
+  consumer:
+    router: console
+    queue: queue
+    durable: true

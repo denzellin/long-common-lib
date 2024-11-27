@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>long-common-lib</artifactId>
+    <groupId>com.isylph</groupId>
+    <version>0.0.5-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>long-management</artifactId>
+  <packaging>pom</packaging>
+
+  <name>long-management</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+    <module>long-management-api</module>
+    <module>long-department-api</module>
+    <module>long-department-domain</module>
+    <module>long-department-persistence</module>
+    <module>long-department-application</module>
+    <module>long-operator-api</module>
+    <module>long-operator-domain</module>
+    <module>long-operator-persistence</module>
+    <module>long-operator-application</module>
+    <module>long-operator-external</module>
+    <module>long-management-service</module>
+    <module>long-management-web</module>
+  </modules>
+</project>

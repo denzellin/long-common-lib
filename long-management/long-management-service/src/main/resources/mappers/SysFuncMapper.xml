@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.console.settings.dao.SysFuncMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.func.SysFuncVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="active" property="active" />
+        <result column="group_id" property="groupId" />
+        <result column="group_name" property="groupName" />
+        <result column="method" property="method" />
+        <result column="url" property="url" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        sf.id,
+        sf.gmt_create,
+        sf.gmt_modified,
+        sf.`name`,
+        sf.active,
+        sf.group_id,
+        sfg.name group_name,
+        sf.method,
+        sf.url
+    </sql>
+    <select id="selectViewListPage" resultMap="VoResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_func sf
+        left join sys_func_group sfg on sf.group_id = sfg.id
+        <where>
+            <if test="name != null and name != ''">
+                sf.`name` like concat('%',#{name},'%')
+            </if>
+            <if test="groupId != null">
+                and group_id = #{groupId}
+            </if>
+        </where>
+        order by group_id asc, id asc
+        <if test="offset != null or cnt != null">
+            limit
+            <if test="offset != null">
+                #{offset},
+            </if>
+            <if test="cnt != null">
+                #{cnt}
+            </if>
+        </if>
+    </select>
+    <select id="countSelectViewListPage" resultType="java.lang.Integer">
+        select count(*) from sys_func
+        <where>
+            <if test="name != null and name != ''">
+                `name` like concat('%',#{name},'%')
+            </if>
+            <if test="groupId != null">
+                and group_id = #{groupId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

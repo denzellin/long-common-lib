@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.aux.excel.dao.AuxExportCfgMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.isylph.aux.excel.model.AuxExportCfgPO">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="title" property="title" />
+        <result column="module" property="module" />
+        <result column="template_file" property="templateFile" />
+        <result column="sheet_name" property="sheetName" />
+        <result column="first_line" property="firstLine" />
+        <result column="sql_statement" property="sqlStatement" />
+        <result column="output_path" property="outputPath" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, create_time, update_time, title, `module`, template_file, sheet_name, first_line, sql_statement, output_path, remark
+    </sql>
+    <select id="getModuleCfg" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from aux_export_cfg where `module` = #{module} limit 1
+    </select>
+    <select id="selectDataList" resultType="java.util.Map">
+        ${statement}
+    </select>
+
+</mapper>

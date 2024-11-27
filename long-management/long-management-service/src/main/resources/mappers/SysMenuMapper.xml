@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.isylph.console.settings.dao.SysMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.isylph.console.settings.model.SysMenuPO">
+        <id column="id" property="id" />
+        <result column="fid" property="fid" />
+        <result column="code" property="code" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="icon" property="icon" />
+        <result column="component" property="component" />
+        <result column="cache" property="cache" />
+        <result column="hide_in_menu" property="hideInMenu" />
+        <result column="hide_in_bread" property="hideInBread" />
+        <result column="sort" property="sort" />
+        <result column="active" property="active" />
+        <result column="is_sys" property="sys" />
+        <result column="is_user" property="user" />
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.menu.SysMenuVO">
+        <id column="id" property="id" />
+        <result column="fid" property="fid" />
+        <result column="code" property="code" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="path" property="path" />
+        <result column="icon" property="icon" />
+        <result column="component" property="component" />
+        <result column="cache" property="cache" />
+        <result column="hide_in_menu" property="hideInMenu" />
+        <result column="hide_in_bread" property="hideInBread" />
+        <result column="sort" property="sort" />
+        <result column="active" property="active" />
+        <result column="is_sys" property="sys" />
+        <result column="is_user" property="user" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, fid, code, title, `name`, path, icon, component, `sort`, active, cache,
+        hide_in_menu, hide_in_bread,is_sys, is_user
+    </sql>
+
+    <!-- 更新替换path的部分字符串 -->
+    <update id="batchUpdateCode" parameterType="map">
+      update sys_menu
+          set code = REPLACE(code,#{old},#{new})
+      where code like concat(#{old},'%')
+  </update>
+
+
+    <select id="selectViewListPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        <where>
+            <if test="title != null and title != ''">
+                `title` like concat('%',#{title},'%')
+            </if>
+        </where>
+        ORDER BY (LENGTH(code) - LENGTH( REPLACE(code,'.','') )) asc, fid asc, sort asc
+    </select>
+    <select id="countSelectViewListPage" resultType="java.lang.Integer">
+
+        select count(*) from sys_menu
+        <where>
+            <if test="title != null and title != ''">
+                `title` like concat('%',#{title},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
