@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Tag(description = "通用功能管理", name = "")
+@Tag(name = "通用功能管理", description = "")
 @RestController
 @RequestMapping("/common")
 public class CommonController extends SecurityBaseController {

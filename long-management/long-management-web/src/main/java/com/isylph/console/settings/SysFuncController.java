@@ -42,7 +42,7 @@ import java.util.Set;
  * @author denzel.lin
  * @since 2019-03-20
  */
-@Tag( name = "100", description = "系统功能")
+@Tag( name = "系统功能", description = "100")
 @RestController
 @RequestMapping("/console/function")
 public class SysFuncController
@@ -60,7 +60,7 @@ public class SysFuncController
     @Qualifier("requestMappingHandlerMapping")
     private RequestMappingHandlerMapping handlerMapping;
 
-    @Operation(description = "系统功能管理", method = "/**", summary = "100")
+    @Operation(description = "系统功能管理", method = "/**", operationId = "100")
     public HttpRetData demo() {
         return HttpRetData.success();
     }

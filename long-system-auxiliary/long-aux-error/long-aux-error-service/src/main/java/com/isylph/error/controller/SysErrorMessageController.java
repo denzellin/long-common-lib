@@ -38,7 +38,7 @@ import java.util.Map;
  * @since 2019-03-19
  */
 @Slf4j
-@Tag(name = "100", description = "系统功能")
+@Tag(name = "系统管理", description = "100")
 @RestController
 @RequestMapping("/errors")
 public class SysErrorMessageController

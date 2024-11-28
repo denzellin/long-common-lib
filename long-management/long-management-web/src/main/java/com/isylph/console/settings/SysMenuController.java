@@ -36,7 +36,7 @@ import java.util.Optional;
  * @since 2019-03-20
  */
 @Slf4j
-@Tag( name = "100", description = "系统功能")
+@Tag( name = "系统功能", description = "100")
 @RestController
 @RequestMapping("/console/menu")
 public class SysMenuController
@@ -79,7 +79,7 @@ public class SysMenuController
 
     }
 
-    @Operation(description = "菜单管理", method = "/**", summary = "200")
+    @Operation(description = "菜单管理", method = "/**", operationId = "200")
     public HttpRetData demo() {
         return HttpRetData.success();
     }

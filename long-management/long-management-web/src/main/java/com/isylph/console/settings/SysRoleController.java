@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-03-20
  */
 @Slf4j
-@Tag(name = "400", description = "运维账户")
+@Tag(name = "运维账户", description = "400")
 @RestController
 @RequestMapping("/console/role")
 public class SysRoleController
@@ -48,7 +48,7 @@ public class SysRoleController
         return sysRoleService;
     }
 
-    @Operation(description = "角色权限", method = "/**", summary = "100")
+    @Operation(description = "角色权限", method = "/**", operationId = "100")
     public HttpRetData demo() {
         return HttpRetData.success();
     }

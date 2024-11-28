@@ -37,7 +37,7 @@ public class ControllerAnnotationScanner {
         ClassScaner.scan("com.isylph", Tag.class).forEach(clazz -> {
 
             // 获取模块名
-            String moduleId = clazz.getAnnotation(Tag.class).name();
+            String moduleId = clazz.getAnnotation(Tag.class).description();
 
             Long mid = null;
             try {
@@ -46,7 +46,7 @@ public class ControllerAnnotationScanner {
                 log.info("Invalid module id: {}", moduleId);
                 return;
             }
-            String moduleName = clazz.getAnnotation(Tag.class).description();
+            String moduleName = clazz.getAnnotation(Tag.class).name();
             SysFuncGroupPO po = sysFuncGroupService.getById(mid);
             SysFuncGroupPO gp = new SysFuncGroupPO();
             gp.setId(mid).setName(moduleName);
@@ -71,10 +71,10 @@ public class ControllerAnnotationScanner {
                     item.setAccessible(true);
                     Operation api = item.getAnnotation(Operation.class);
 
-                    if (api == null || StringUtils.isEmpty(api.summary())){
+                    if (api == null || StringUtils.isEmpty(api.operationId())){
                         continue;
                     }
-                    String funcId = api.summary();
+                    String funcId = api.operationId();
                     Long fid = null;
                     try {
                         fid = Long.valueOf(moduleId+funcId);

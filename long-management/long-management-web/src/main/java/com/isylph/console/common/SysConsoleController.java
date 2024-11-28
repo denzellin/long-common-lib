@@ -40,7 +40,7 @@ import java.util.List;
  * @since 2019-03-20
  */
 @Slf4j
-@Tag(description = "系统管理", name = "")
+@Tag(name = "系统功能", description = "100")
 @RestController
 @RequestMapping("/console/role")
 public class SysConsoleController {

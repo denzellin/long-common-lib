@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-03-19
  */
 @Slf4j
-@Tag(name = "400", description = "运维账户")
+@Tag(name = "运维账户", description = "400")
 @RestController
 @RequestMapping("/console/operator")
 public class SysOperatorController{
@@ -38,7 +38,7 @@ public class SysOperatorController{
     @Autowired
     private OperatorApplicationService operatorApplicationService;
 
-    @Operation(description = "用户账号", method = "/**", summary = "001")
+    @Operation(description = "用户账号", method = "/**", operationId = "001")
     public HttpRetData demo() {
         return HttpRetData.success();
     }

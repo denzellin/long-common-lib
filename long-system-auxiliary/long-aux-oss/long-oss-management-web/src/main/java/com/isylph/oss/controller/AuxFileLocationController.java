@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Tag(name = "", description = "文件模块管理")
+@Tag(name = "文件模块管理", description = "")
 @RequestMapping("oss/module")
 public class AuxFileLocationController{
 
