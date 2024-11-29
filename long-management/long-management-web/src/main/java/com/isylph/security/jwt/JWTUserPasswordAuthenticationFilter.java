@@ -30,10 +30,13 @@ import java.util.Objects;
 @Slf4j
 public class JWTUserPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    public JWTUserPasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private final UserTokenAssemblerService userTokenAssemblerService;
+
+    public JWTUserPasswordAuthenticationFilter(AuthenticationManager authenticationManager, UserTokenAssemblerService userTokenAssemblerService) {
         this.authenticationManager = authenticationManager;
+        this.userTokenAssemblerService = userTokenAssemblerService;
     }
 
     @Override
@@ -67,13 +70,13 @@ public class JWTUserPasswordAuthenticationFilter extends UsernamePasswordAuthent
             roles.add(authority.getAuthority());
         }
         // 根据用户名，角色创建token
-        String token = UserTokenAssemblerService.createToken((SessionUserContextVO)authResult.getPrincipal(), roles);
+        String token = userTokenAssemblerService.createToken((SessionUserContextVO)authResult.getPrincipal(), roles);
 
 
         // 返回创建成功的token
         // 但是这里创建的token只是单纯的token
         // 按照jwt的规定，最后请求的格式应该是 `Bearer token`
-        UserTokenAssemblerService.putHeaderToken(response, token);
+        userTokenAssemblerService.putHeaderToken(response, token);
 
         SecurityContextHolder.getContext().setAuthentication(authResult);
         response.setCharacterEncoding(CommonConsts.CHARSET_UTF8);
