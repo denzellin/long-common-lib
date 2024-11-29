@@ -87,7 +87,7 @@ public class ControllerAnnotationScanner {
                             .setActive(1)
                             .setGroupId(mid)
                             .setId(fid)
-                            .setName(api.description())
+                            .setName(api.summary())
                             .setUrl(baseUrl + api.method());
                     if (get != null){
                         func.setMethod("GET");

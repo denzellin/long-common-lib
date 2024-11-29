@@ -2,7 +2,7 @@ package com.isylph.console.settings;
 
 
 import com.isylph.basis.beans.HttpRetData;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.console.api.beans.system.role.SysRoleQuery;
 import com.isylph.console.api.beans.system.role.SysRoleSaveCmd;
@@ -48,7 +48,7 @@ public class SysRoleController
         return sysRoleService;
     }
 
-    @Operation(description = "角色权限", method = "/**", operationId = "100")
+    @Operation(summary = "角色权限", method = "/**", operationId = "100")
     public HttpRetData demo() {
         return HttpRetData.success();
     }
@@ -77,7 +77,7 @@ public class SysRoleController
         SysRolePO po = sysRoleService.getById(request.getId());
         if (isSysRole(po)){
             log.info("can't edit the sys role: {}", po);
-            throw new ReturnException(RetCodeConsts.RET_BAD_PARAM);
+            throw new ReturnException(BaseErrorConsts.RET_BAD_PARAM);
         }
 
         SysRolePO newPo = new SysRolePO();
@@ -94,7 +94,7 @@ public class SysRoleController
         SysRolePO po = sysRoleService.getById(id);
         if (isSysRole(po)){
             log.info("can't edit the sys role: {}", po);
-            throw new ReturnException(RetCodeConsts.RET_BAD_PARAM);
+            throw new ReturnException(BaseErrorConsts.RET_BAD_PARAM);
         }
 
         sysRoleService.removeById(id);

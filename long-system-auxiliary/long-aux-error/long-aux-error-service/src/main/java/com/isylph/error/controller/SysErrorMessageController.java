@@ -3,7 +3,7 @@ package com.isylph.error.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.isylph.basis.beans.HttpRetData;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.controller.CrudController;
 import com.isylph.error.api.beans.AuxErrorMessageDTO;
@@ -63,14 +63,14 @@ public class SysErrorMessageController
         return new AuxErrorMessageDTO();
     }
 
-    @Operation(description = "导入错误码")
+    @Operation(summary = "导入错误码")
     @PostMapping(value = "/load")
     public HttpRetData loadErrorAnnotation(@RequestParam(required = false) Long set){
 
         Map<Long, ErrorDTO> map = ErrorAnnotationScanner.getErrMap();
         if (null == map){
             log.error("no error annotation found.");
-            throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+            throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
         }
 
         for (Map.Entry<Long, ErrorDTO> entry : map.entrySet()) {
@@ -129,7 +129,7 @@ public class SysErrorMessageController
         List<ErrorDTO> errs = request.getErrs();
         if (CollectionUtils.isEmpty(errs)){
             log.warn("save empty errors");
-            throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+            throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
         }
         for(ErrorDTO item: errs){
             AuxErrorMessagePO po = sysErrorMessageService.getById(item.getVal());

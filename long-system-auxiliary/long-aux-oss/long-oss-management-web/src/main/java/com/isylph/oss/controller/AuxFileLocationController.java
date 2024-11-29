@@ -36,7 +36,7 @@ public class AuxFileLocationController{
     private OssApplicationService ossApplicationService;
 
 
-    @Operation(description = "获取模块路径")
+    @Operation(summary = "获取模块路径")
     @GetMapping(value = "/module/{module}")
     public HttpRetData getModulePath(@PathVariable String module) {
 
@@ -45,7 +45,7 @@ public class AuxFileLocationController{
 
 
     @PostMapping("/c")
-    @Operation(description = "新增")
+    @Operation(summary = "新增")
     HttpRetData add(@RequestBody OssFileLocationSaveCmd request) {
         ossApplicationService.saveOssFileLocation(request);
         return HttpRetData.success();
@@ -53,14 +53,14 @@ public class AuxFileLocationController{
 
 
     @PostMapping(path = "/d")
-    @Operation(description = "删除数据")
+    @Operation(summary = "删除数据")
     HttpRetData deleteByPrimaryKey(@RequestParam Long id) {
         ossApplicationService.removeOssFileLocation(id);
         return HttpRetData.success();
     }
 
     @PostMapping(path = {"/u"})
-    @Operation(description = "编辑记录")
+    @Operation(summary = "编辑记录")
     HttpRetData updateByPrimaryKey(@RequestBody OssFileLocationUpdateCmd request) {
         ossApplicationService.updateOssFileLocation(request);
         return HttpRetData.success();
@@ -69,7 +69,7 @@ public class AuxFileLocationController{
 
 
     @GetMapping(path = {"/r/{id}"})
-    @Operation(description = "根据主键查询")
+    @Operation(summary = "根据主键查询")
     HttpRetData getByPrimaryKey(@PathVariable(name = "id") Long id) {
 
 
@@ -78,7 +78,7 @@ public class AuxFileLocationController{
     }
 
     @PostMapping(path = "/r")
-    @Operation(description = "根据筛选条件查询列表")
+    @Operation(summary = "根据筛选条件查询列表")
     HttpRetData listByFilter(@RequestBody OssFileLocationQuery query) {
         return HttpRetData.success(ossApplicationService.queryOssFileLocation(query));
     }

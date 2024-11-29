@@ -38,20 +38,20 @@ public class SysOperatorController{
     @Autowired
     private OperatorApplicationService operatorApplicationService;
 
-    @Operation(description = "用户账号", method = "/**", operationId = "001")
+    @Operation(summary = "用户账号", method = "/**", operationId = "001")
     public HttpRetData demo() {
         return HttpRetData.success();
     }
 
     @PostMapping("/c")
-    @Operation(description = "创建用户")
+    @Operation(summary = "创建用户")
     HttpRetData add( @RequestBody SysOperatorSaveCmd request) {
         operatorApplicationService.createOperator(request);
         return HttpRetData.success();
     }
 
     @PostMapping(path = "/d")
-    @Operation(description = "删除数据")
+    @Operation(summary = "删除数据")
     HttpRetData deleteByPrimaryKey(@RequestParam Long id) {
         operatorApplicationService.removeOperator(id);
         return HttpRetData.success();
@@ -59,14 +59,14 @@ public class SysOperatorController{
 
 
     @PostMapping(path = {"/u"})
-    @Operation(description = "编辑记录")
+    @Operation(summary = "编辑记录")
     HttpRetData updateByPrimaryKey(@RequestBody SysOperatorUpdateCmd request) {
         operatorApplicationService.updateOperator(request);
         return HttpRetData.success();
     }
 
     @GetMapping(path = {"/r/{id}"})
-    @Operation(description = "根据主键查询")
+    @Operation(summary = "根据主键查询")
     HttpRetData getByPrimaryKey(@PathVariable(name = "id") Long id) {
 
         SysOperatorVO vo = operatorApplicationService.getOperator(id);
@@ -75,7 +75,7 @@ public class SysOperatorController{
     }
 
     @PostMapping(path = "/r")
-    @Operation(description = "根据筛选条件查询列表")
+    @Operation(summary = "根据筛选条件查询列表")
     HttpRetData listByFilter(@RequestBody SysOperatorQuery query) {
 
         RetPage<SysOperatorVO> ret = operatorApplicationService.queryOperator(query);
@@ -83,7 +83,7 @@ public class SysOperatorController{
     }
 
 
-    @Operation(description = "修改密码")
+    @Operation(summary = "修改密码")
     @PostMapping(value = "/password")
     public HttpRetData changePassword(@RequestBody PasswordModifyCmd vo){
 

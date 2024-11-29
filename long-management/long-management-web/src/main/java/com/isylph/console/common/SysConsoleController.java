@@ -73,7 +73,7 @@ public class SysConsoleController {
     }
 
 
-    @Operation(description = "保存角色用户成员")
+    @Operation(summary = "保存角色用户成员")
     @PostMapping(value = "/member/c")
     public HttpRetData saveRoleMember(@RequestBody SysRoleMemberSaveCmd req){
 
@@ -84,7 +84,7 @@ public class SysConsoleController {
     }
 
 
-    @Operation(description = "保存角色菜单")
+    @Operation(summary = "保存角色菜单")
     @PostMapping(value = "/menu/c")
     public HttpRetData saveRoleMateMenu(@RequestBody SysRoleMenuSaveCmd req){
 
@@ -92,7 +92,7 @@ public class SysConsoleController {
         return HttpRetData.success();
     }
 
-    @Operation(description = "查找角色菜单组")
+    @Operation(summary = "查找角色菜单组")
     @PostMapping(value = "/menu/r")
     public HttpRetData<List<SysMenuVO>> listRoleMenus(@RequestParam(value = "roleId", required = false) Long roleId) {
 
@@ -113,7 +113,7 @@ public class SysConsoleController {
         return HttpRetData.success(menus);
     }
 
-    @Operation(description = "保存角色功能")
+    @Operation(summary = "保存角色功能")
     @PostMapping(value = "/func/c")
     public HttpRetData saveRoleFunc(@RequestBody SysRoleFuncSaveCmd req) {
 
@@ -122,7 +122,7 @@ public class SysConsoleController {
         return HttpRetData.success();
     }
 
-    @Operation(description = "查找角色功能组")
+    @Operation(summary = "查找角色功能组")
     @PostMapping(value = "/func/r")
     public HttpRetData<List<SysFuncVO>> listRoleFunc(@RequestParam(value = "roleId", required = false) Long roleId) {
 

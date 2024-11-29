@@ -44,7 +44,7 @@ public class DepartmentController extends BaseSpringSecurityController {
     @Autowired
     private DepartmentApplicationService departmentApplicationService;
 
-    @Operation(description = "创建部门", operationId = "201")
+    @Operation(summary = "创建部门", operationId = "201")
     @PostMapping(value = "")
     public HttpRetData add(@RequestBody DepartmentSaveCmd req) {
         departmentApplicationService.saveDepartment(req);
@@ -52,14 +52,14 @@ public class DepartmentController extends BaseSpringSecurityController {
     }
 
 
-    @Operation(description = "编辑部门", method = "", operationId = "202")
+    @Operation(summary = "编辑部门", method = "", operationId = "202")
     @PutMapping(value = "")
     public HttpRetData update(@RequestBody DepartmentUpdateCmd req) {
         departmentApplicationService.updateDepartment(req);
         return HttpRetData.success();
     }
 
-    @Operation(description = "查询机构", method = "/org", operationId = "203")
+    @Operation(summary = "查询机构", method = "/org", operationId = "203")
     @GetMapping(value = "/org")
     public HttpRetData getOrgs() {
         SessionUserContextVO ju = (SessionUserContextVO)getCurrentUserObject();
@@ -74,14 +74,14 @@ public class DepartmentController extends BaseSpringSecurityController {
         return HttpRetData.success(vo);
     }
 
-    @Operation(description = "查询部门详情", method = "/**", operationId = "204")
+    @Operation(summary = "查询部门详情", method = "/**", operationId = "204")
     @GetMapping(value = "/{id}")
     public HttpRetData get(@PathVariable Long id) {
         DepartmentVO vo = departmentApplicationService.getDepartment(id);
         return HttpRetData.success(vo);
     }
 
-    @Operation(description = "查询部门树", method = "/tree", operationId = "205")
+    @Operation(summary = "查询部门树", method = "/tree", operationId = "205")
     @PostMapping(value = "/tree")
     public HttpRetData tree(@RequestParam(required = false)Long fid) {
         SessionUserContextVO ju = (SessionUserContextVO)getCurrentUserObject();
@@ -94,7 +94,7 @@ public class DepartmentController extends BaseSpringSecurityController {
         return HttpRetData.success(vos);
     }
 
-    @Operation(description = "查询部门列表", method = "/list", operationId = "206")
+    @Operation(summary = "查询部门列表", method = "/list", operationId = "206")
     @PostMapping(value = "/list")
     public HttpRetData list(@RequestBody DepartmentQuery req) {
         SessionUserContextVO ju = (SessionUserContextVO)getCurrentUserObject();
@@ -106,7 +106,7 @@ public class DepartmentController extends BaseSpringSecurityController {
     }
 
 
-    @Operation(description = "删除部门", method = "/*", operationId = "207")
+    @Operation(summary = "删除部门", method = "/*", operationId = "207")
     @DeleteMapping(value = "/{id}")
     public HttpRetData delete(@PathVariable Long id) {
 

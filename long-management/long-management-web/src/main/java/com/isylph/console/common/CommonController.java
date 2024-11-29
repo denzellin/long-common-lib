@@ -61,21 +61,21 @@ public class CommonController extends SecurityBaseController {
         return ps;
     }
 
-    @Operation(description = "前端错误日志")
+    @Operation(summary = "前端错误日志")
     @PostMapping(value = "/log")
     public HttpRetData log(String logInfo) {
         log.info("Front end log: {}", logInfo);
         return HttpRetData.success();
     }
 
-    @Operation(description = "获取当前用户菜单")
+    @Operation(summary = "获取当前用户菜单")
     @GetMapping(value = "/menu")
     public HttpRetData<List<SysMenuVO>> getMenus() {
         List<SysMenuVO> list = sysRoleMenuService.listRolesMenus(getCurrentAccountRoles());
         return HttpRetData.success(Tree.assembleTree(list));
     }
 
-    @Operation(description = "判断功能权限")
+    @Operation(summary = "判断功能权限")
     @PostMapping(value = "/permission")
     public HttpRetData<List<PermissionVO>> pageAuth(@RequestBody GetPermissionVO req) {
 
@@ -122,7 +122,7 @@ public class CommonController extends SecurityBaseController {
         return HttpRetData.success(permissions);
     }
 
-    @Operation(description = "当前登录用户信息")
+    @Operation(summary = "当前登录用户信息")
     @GetMapping(value = "/profile/r")
     public HttpRetData<SysOperatorVO> userDetail() {
 
@@ -130,7 +130,7 @@ public class CommonController extends SecurityBaseController {
         return HttpRetData.success(vo);
     }
 
-    @Operation(description = "修改当前登录用户信息")
+    @Operation(summary = "修改当前登录用户信息")
     @PostMapping(value = "/profile/u")
     public HttpRetData updateUser(@RequestBody SysOperatorUpdateCmd saveVo) {
 
@@ -139,7 +139,7 @@ public class CommonController extends SecurityBaseController {
         return HttpRetData.success();
     }
 
-    @Operation(description = "修改当前登录用户密码")
+    @Operation(summary = "修改当前登录用户密码")
     @PostMapping(value = "/password/u")
     public HttpRetData updateUserPwd(String old, String newz) {
 

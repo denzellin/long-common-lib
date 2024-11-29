@@ -2,7 +2,7 @@ package com.isylph.console.settings;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.beans.HttpRetData;
 import com.isylph.basis.beans.Tree;
 import com.isylph.basis.controller.exception.ReturnException;
@@ -71,7 +71,7 @@ public class SysMenuController
         }else {
             SysMenuPO fMenu = sysMenuService.getById(fid);
             if (null == fMenu) {
-                throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+                throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
             }
 
             return fMenu.getCode() + fid.toString() + ".";
@@ -79,7 +79,7 @@ public class SysMenuController
 
     }
 
-    @Operation(description = "菜单管理", method = "/**", operationId = "200")
+    @Operation(summary = "菜单管理", method = "/**", operationId = "200")
     public HttpRetData demo() {
         return HttpRetData.success();
     }
@@ -118,7 +118,7 @@ public class SysMenuController
         SysMenuPO oMenu = sysMenuService.getById(request.getId());
         if (null == oMenu) {
             log.debug("request: {}", request);
-            throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+            throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
         }
 
         String oldPath = oMenu.getCode();
@@ -138,7 +138,7 @@ public class SysMenuController
         return HttpRetData.success();
     }
 
-    @Operation(description = "菜单启用/禁用")
+    @Operation(summary = "菜单启用/禁用")
     @PostMapping(value = "/activate")
     public HttpRetData menuActive(@RequestParam(value = "id") Long id,
                                   @RequestParam(value = "active", required = false) Integer active) {
@@ -146,7 +146,7 @@ public class SysMenuController
         SysMenuPO oMenu = sysMenuService.getById(id);
         if (null == oMenu) {
             log.debug("failed to get menu: {}", id);
-            throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+            throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
         }
         SysMenuPO pNew = new SysMenuPO();
         pNew.setId(id);
@@ -156,7 +156,7 @@ public class SysMenuController
         return HttpRetData.success();
     }
 
-    @Operation(description = "菜单树")
+    @Operation(summary = "菜单树")
     @GetMapping(value = "/tree")
     public HttpRetData<List<SysMenuVO>> tree() {
         SysMenuQuery query = new SysMenuQuery();

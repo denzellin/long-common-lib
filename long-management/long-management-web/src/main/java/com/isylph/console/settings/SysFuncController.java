@@ -60,7 +60,7 @@ public class SysFuncController
     @Qualifier("requestMappingHandlerMapping")
     private RequestMappingHandlerMapping handlerMapping;
 
-    @Operation(description = "系统功能管理", method = "/**", operationId = "100")
+    @Operation(summary = "系统功能管理", method = "/**", operationId = "100")
     public HttpRetData demo() {
         return HttpRetData.success();
     }
@@ -78,7 +78,7 @@ public class SysFuncController
 
     @Autowired
     private ControllerAnnotationScanner controllerAnnotationScanner;
-    @Operation(description = "导入功能")
+    @Operation(summary = "导入功能")
     @PostMapping(value = "/load")
     public HttpRetData loadFunctionAnnotation(){
         controllerAnnotationScanner.saveSystemFunctionsInfo();
@@ -87,7 +87,7 @@ public class SysFuncController
 
 
     @GetMapping(path = "/fetch")
-    @Operation(description = "查询SPRING MVC的URL")
+    @Operation(summary = "查询SPRING MVC的URL")
     public HttpRetData<List<Map<String, String>>> fecthUrl(String pat) {
 
         Map<RequestMappingInfo, HandlerMethod> map = this.handlerMapping.getHandlerMethods();
