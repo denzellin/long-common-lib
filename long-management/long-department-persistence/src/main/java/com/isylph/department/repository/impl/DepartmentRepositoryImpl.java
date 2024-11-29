@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.isylph.basis.base.RetPage;
 import com.isylph.basis.beans.Tree;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.department.api.beans.DepartmentQuery;
 import com.isylph.department.api.beans.DepartmentVO;
@@ -14,7 +14,6 @@ import com.isylph.department.persistence.converter.DepartmentBuilder;
 import com.isylph.department.persistence.dao.DepartmentMapper;
 import com.isylph.department.persistence.model.DepartmentPO;
 import com.isylph.department.repository.DepartmentRepository;
-import com.isylph.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +41,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         }else {
             DepartmentPO f = departmentMapper.selectById(fid);
             if (null == f) {
-                throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+                throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
             }
 
             return f.getCode() + dept.getId() + ".";

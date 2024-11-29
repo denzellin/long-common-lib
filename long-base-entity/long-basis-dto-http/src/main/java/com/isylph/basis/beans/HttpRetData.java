@@ -2,7 +2,7 @@ package com.isylph.basis.beans;
 
 
 import com.isylph.basis.base.RetPage;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
@@ -57,8 +57,8 @@ public class HttpRetData<T> extends BaseVO {
 
     public static HttpRetData success() {
         HttpRetData resultData = new HttpRetData();
-        resultData.setCode(RetCodeConsts.RET_OK);
-        resultData.setMessage(RetCodeConsts.RET_OK_MSG);
+        resultData.setCode(BaseErrorConsts.RET_OK);
+        resultData.setMessage(BaseErrorConsts.RET_OK_MSG);
         return resultData;
     }
 
@@ -70,8 +70,8 @@ public class HttpRetData<T> extends BaseVO {
 
     public static <T> HttpRetData<List<T>> success(RetPage<T> data) {
         HttpRetData resultData = new HttpRetData<List<T>>();
-        resultData.setCode(RetCodeConsts.RET_OK);
-        resultData.setMessage(RetCodeConsts.RET_OK_MSG);
+        resultData.setCode(BaseErrorConsts.RET_OK);
+        resultData.setMessage(BaseErrorConsts.RET_OK_MSG);
         resultData.setTotal(data.getTotal());
         resultData.setData(data.getRecords());
         return resultData;

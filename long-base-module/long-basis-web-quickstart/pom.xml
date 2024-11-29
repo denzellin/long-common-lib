@@ -24,6 +24,11 @@
     </dependency>
     <dependency>
       <groupId>com.isylph</groupId>
+      <artifactId>long-basis-error</artifactId>
+      <version>${def_version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.isylph</groupId>
       <artifactId>long-basis-persistence</artifactId>
       <version>${def_version}</version>
     </dependency>

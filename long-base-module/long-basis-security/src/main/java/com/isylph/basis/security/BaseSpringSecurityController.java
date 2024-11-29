@@ -1,7 +1,7 @@
 package com.isylph.basis.security;
 
 import com.isylph.basis.base.BaseCmd;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.basis.jwt.beans.BaseJwtUser;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +75,7 @@ public class BaseSpringSecurityController {
             req.setOpName(jwt.getName());
             return;
         }
-        throw new ReturnException(RetCodeConsts.RET_FORBIDDEN, "未登录");
+        throw new ReturnException(BaseErrorConsts.RET_FORBIDDEN, "未登录");
 
     }
 

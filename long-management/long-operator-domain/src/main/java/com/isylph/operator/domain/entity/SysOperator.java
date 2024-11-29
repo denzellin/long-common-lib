@@ -1,14 +1,12 @@
 package com.isylph.operator.domain.entity;
 
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.operator.domain.types.SysDepartment;
 import com.isylph.utils.StringUtils;
 import com.isylph.utils.encryption.PasswordUtils;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -94,7 +92,7 @@ public class SysOperator {
         String pwd = PasswordUtils.encryptPassword(password, this.salt).toUpperCase();
         if (!pwd.equals(this.password)){
             //log.info("Incorrect password: {}", account);
-            throw new ReturnException(RetCodeConsts.RET_ERROR);
+            throw new ReturnException(BaseErrorConsts.RET_ERROR);
         }
 
         return true;

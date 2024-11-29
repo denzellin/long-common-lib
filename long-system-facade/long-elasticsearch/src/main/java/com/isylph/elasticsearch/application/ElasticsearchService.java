@@ -1,6 +1,6 @@
 package com.isylph.elasticsearch.application;
 
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.elasticsearch.domain.EsEntity;
 import com.isylph.utils.json.JacksonUtils;
@@ -79,7 +79,7 @@ public class ElasticsearchService {
         } catch (IOException e) {
             e.printStackTrace();
             log.warn("Failed to create or update index, {}.");
-            throw new ReturnException(RetCodeConsts.RET_RPC_ERR);
+            throw new ReturnException(BaseErrorConsts.RET_RPC_ERR);
         }
 
     }
@@ -136,7 +136,7 @@ public class ElasticsearchService {
             highLevelClient.index(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
             log.warn("failed to save record: {}, {}", entity, e);
-            throw new ReturnException(RetCodeConsts.RET_RPC_ERR);
+            throw new ReturnException(BaseErrorConsts.RET_RPC_ERR);
         }
     }
 
@@ -153,7 +153,7 @@ public class ElasticsearchService {
             highLevelClient.bulk(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
             log.warn("failed to save record:{}", e);
-            throw new ReturnException(RetCodeConsts.RET_RPC_ERR);
+            throw new ReturnException(BaseErrorConsts.RET_RPC_ERR);
         }
     }
 
@@ -170,7 +170,7 @@ public class ElasticsearchService {
             highLevelClient.bulk(request, RequestOptions.DEFAULT);
         } catch (Exception e) {
             log.warn("failed to delete record:{}, {}", idList, e);
-            throw new ReturnException(RetCodeConsts.RET_RPC_ERR);
+            throw new ReturnException(BaseErrorConsts.RET_RPC_ERR);
         }
     }
 
@@ -196,7 +196,7 @@ public class ElasticsearchService {
             return res;
         } catch (Exception e) {
             log.warn("failed to search record:{}", e);
-            throw new ReturnException(RetCodeConsts.RET_RPC_ERR);
+            throw new ReturnException(BaseErrorConsts.RET_RPC_ERR);
         }
     }
 
@@ -217,7 +217,7 @@ public class ElasticsearchService {
             highLevelClient.deleteByQuery(request, RequestOptions.DEFAULT);
         } catch (Exception e) {
             log.warn("failed to delete record: {}, {}", builder, e);
-            throw new ReturnException(RetCodeConsts.RET_RPC_ERR);
+            throw new ReturnException(BaseErrorConsts.RET_RPC_ERR);
         }
     }
 }

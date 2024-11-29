@@ -1,7 +1,7 @@
 package com.isylph.basis.controller.exception;
 
 import com.isylph.basis.beans.HttpRetData;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
@@ -42,14 +42,14 @@ public abstract class RestExceptionBaseHandler {
 
             if (!StringUtils.isEmpty(errorMessage)) {
                 if (code == null) {
-                    resultData.set(RetCodeConsts.RET_BAD_PARAM, errorMessage, null, null);
+                    resultData.set(BaseErrorConsts.RET_BAD_PARAM, errorMessage, null, null);
                 } else {
                     resultData.set(code, errorMessage, null, null);
                 }
             } else if (code != null) {
                  resultData.set(code, getMessage(code), null, null);
             } else {
-                resultData.set(RetCodeConsts.RET_ERROR, RetCodeConsts.RET_ERROR_MSG, null, null);
+                resultData.set(BaseErrorConsts.RET_ERROR, BaseErrorConsts.RET_ERROR_MSG, null, null);
             }
             log.error("error message:{}",resultData);
         }else if (e instanceof ConstraintViolationException){
@@ -58,14 +58,14 @@ public abstract class RestExceptionBaseHandler {
             for (ConstraintViolation value : ((ConstraintViolationException) e).getConstraintViolations()) {
                 msg = value.getMessageTemplate() + " ";
             }
-            resultData.set(RetCodeConsts.RET_BAD_PARAM, msg, null, null);
+            resultData.set(BaseErrorConsts.RET_BAD_PARAM, msg, null, null);
         } else if ( e instanceof MethodArgumentNotValidException){
             MethodArgumentNotValidException exception = (MethodArgumentNotValidException)e;
-            resultData.set(RetCodeConsts.RET_BAD_PARAM, exception.getBindingResult().getFieldError().getDefaultMessage(), null, null);
+            resultData.set(BaseErrorConsts.RET_BAD_PARAM, exception.getBindingResult().getFieldError().getDefaultMessage(), null, null);
         } else {
             log.error("request url:{}",request.getRequestURI());
             log.error("--------->Application exception occurred: {}!", e);
-            resultData.set(RetCodeConsts.RET_ERROR, RetCodeConsts.RET_ERROR_MSG, null, null);
+            resultData.set(BaseErrorConsts.RET_ERROR, BaseErrorConsts.RET_ERROR_MSG, null, null);
         }
         return resultData;
     }

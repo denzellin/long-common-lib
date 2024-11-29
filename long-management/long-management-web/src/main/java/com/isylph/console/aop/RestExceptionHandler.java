@@ -1,6 +1,6 @@
 package com.isylph.console.aop;
 
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.RestExceptionBaseHandler;
 import com.isylph.error.model.AuxErrorMessagePO;
 import com.isylph.error.service.AuxErrorMessageService;
@@ -22,7 +22,7 @@ public class RestExceptionHandler extends RestExceptionBaseHandler {
 
         log.debug("error code: {}", code);
         if (null == code){
-            return RetCodeConsts.RET_ERROR_MSG;
+            return BaseErrorConsts.RET_ERROR_MSG;
         }
 
         AuxErrorMessagePO err = sysErrorMessageService.getById(code);

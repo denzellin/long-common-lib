@@ -1,6 +1,6 @@
 package com.isylph.utils.http;
 
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.utils.StringUtils;
 import com.isylph.utils.json.JacksonUtils;
@@ -39,7 +39,6 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -492,7 +491,7 @@ public class HttpClient {
         } catch (URISyntaxException e) {
             e.printStackTrace();
 
-            throw new ReturnException(RetCodeConsts.RET_BAD_PARAM);
+            throw new ReturnException(BaseErrorConsts.RET_BAD_PARAM);
         }
 
     }
@@ -539,7 +538,7 @@ public class HttpClient {
             }
         }catch (Exception e){
             log.warn("Unsupported params: {} ", content);
-            throw new ReturnException(RetCodeConsts.RET_BAD_PARAM);
+            throw new ReturnException(BaseErrorConsts.RET_BAD_PARAM);
         }
 
     }

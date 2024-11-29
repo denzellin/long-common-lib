@@ -9,7 +9,7 @@ package com.isylph.notification.service;
  */
 
 
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.notification.beans.SendSmsReq;
 import com.isylph.notification.task.SmsServiceThread;
@@ -117,12 +117,12 @@ public class PostSmsService {
         long lastSendTime = Optional.ofNullable(smsSendTimeMap.get(phoneNumber)).orElse(0L);
         long curSendTime = System.currentTimeMillis();
         if (curSendTime - lastSendTime < timeIntervalBetweenSms * 1000) {
-            throw new ReturnException(RetCodeConsts.RET_ERROR, "一分钟内不能重复发送");
+            throw new ReturnException(BaseErrorConsts.RET_ERROR, "一分钟内不能重复发送");
         }
 
         int sendCount = Optional.ofNullable(smsSendCountMap.get(phoneNumber)).orElse(0);
         if (sendCount > dailySmsCntThreshold) {
-            throw new ReturnException(RetCodeConsts.RET_ERROR, "同一手机号一天只能发送10条短信");
+            throw new ReturnException(BaseErrorConsts.RET_ERROR, "同一手机号一天只能发送10条短信");
         }
 
         smsSendTimeMap.put(phoneNumber, curSendTime);

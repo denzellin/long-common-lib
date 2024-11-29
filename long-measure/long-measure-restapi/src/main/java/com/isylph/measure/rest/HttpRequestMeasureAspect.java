@@ -24,7 +24,7 @@ public class HttpRequestMeasureAspect {
         /*Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
             if (arg == null) {
-                throw new ReturnException(RetCodeConsts.RET_BAD_PARAM);
+                throw new ReturnException(BaseErrorConsts.RET_BAD_PARAM);
             }
         }*/
     }

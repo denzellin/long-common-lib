@@ -2,7 +2,7 @@ package com.isylph.operator.repository.impl;
 
 
 import com.isylph.basis.base.RetPage;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.operator.api.beans.operator.SysOperatorQuery;
 import com.isylph.operator.domain.entity.OperatorManager;
@@ -63,14 +63,14 @@ public class OperatorRepositoryImpl implements OperatorRepository {
         if (po.getId() == null){
             if (exist != null){
                 log.info("invalid account： {}", req);
-                throw new ReturnException(RetCodeConsts.RET_CONFLICT);
+                throw new ReturnException(BaseErrorConsts.RET_CONFLICT);
             }
             sysOperatorMapper.insert(po);
 
         }else{
             if (exist != null && !exist.getId().equals(req.getId())){
                 log.info("invalid account： {}", req);
-                throw new ReturnException(RetCodeConsts.RET_CONFLICT);
+                throw new ReturnException(BaseErrorConsts.RET_CONFLICT);
             }
             sysOperatorMapper.updateById(po);
             sysOperatorDepartmentMapper.deleteByOperatorId(po.getId());

@@ -1,7 +1,7 @@
 package com.isylph.console.settings.service.impl;
 
 import com.isylph.basis.consts.CommonConsts;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.console.api.beans.system.role.SysRoleUserVO;
 import com.isylph.console.api.beans.system.role.SysRoleVO;
@@ -13,7 +13,6 @@ import com.isylph.console.settings.dao.SysRoleUserMapper;
 import com.isylph.console.settings.model.SysRolePO;
 import com.isylph.operator.api.beans.operator.SysOperatorVO;
 import com.isylph.operator.application.OperatorApplicationService;
-import com.isylph.operator.domain.types.AccountId;
 import com.isylph.service.impl.BaseServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -100,7 +99,7 @@ public class SysRoleUserServiceImpl
 
         //判断是否默认角色-不能修改
         if (role == null){
-            throw new ReturnException(RetCodeConsts.RET_BAD_PARAM);
+            throw new ReturnException(BaseErrorConsts.RET_BAD_PARAM);
         }
 
         baseMapper.deleteByRoleId(roleId);

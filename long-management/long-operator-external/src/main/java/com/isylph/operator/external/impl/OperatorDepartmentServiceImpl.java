@@ -1,7 +1,5 @@
 package com.isylph.operator.external.impl;
 
-import com.isylph.basis.consts.RetCodeConsts;
-import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.department.api.beans.DepartmentVO;
 import com.isylph.department.application.DepartmentApplicationService;
 import com.isylph.operator.domain.types.SysDepartment;

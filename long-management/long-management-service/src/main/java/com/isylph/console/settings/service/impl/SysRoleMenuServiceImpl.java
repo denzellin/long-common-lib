@@ -1,7 +1,7 @@
 package com.isylph.console.settings.service.impl;
 
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.consts.CommonConsts;
-import com.isylph.basis.consts.RetCodeConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.console.api.beans.system.menu.SysMenuVO;
 import com.isylph.console.api.beans.system.role.SysRoleMenuQuery;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -70,7 +69,7 @@ public class SysRoleMenuServiceImpl
         SysRolePO rolePo = sysRoleService.getById(roleId);
         if (null  == rolePo ){
             log.error("the role is not exist: {}", roleId);
-            throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+            throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
         }
 
         baseMapper.deleteByRoleId(roleId);

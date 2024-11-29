@@ -4,7 +4,7 @@ package com.isylph.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.isylph.basis.base.BaseListQuery;
 import com.isylph.basis.beans.HttpRetData;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.service.BaseService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public interface QueryController<T, V, Q extends BaseListQuery> {
 
         T model = getService().getById(id);
         if(null == model){
-            throw new ReturnException(RetCodeConsts.RET_NOT_FOUND);
+            throw new ReturnException(BaseErrorConsts.RET_NOT_FOUND);
         }
         V view = modelToViewObject(model);
         return HttpRetData.success(view);

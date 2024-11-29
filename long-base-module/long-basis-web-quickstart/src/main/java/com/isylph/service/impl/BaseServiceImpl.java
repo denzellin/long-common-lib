@@ -4,7 +4,7 @@ package com.isylph.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.isylph.basis.base.BaseListQuery;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.basis.persistence.dao.BaseMapperEx;
 import com.isylph.service.BaseService;
@@ -66,14 +66,14 @@ public abstract class BaseServiceImpl<M extends BaseMapperEx<T,  Q>, T, Q
 
 
     protected long getNotExistCode() {
-        return RetCodeConsts.RET_NOT_FOUND;
+        return BaseErrorConsts.RET_NOT_FOUND;
     }
 
     protected long getDuplicateItemCode() {
-        return RetCodeConsts.RET_CONFLICT;
+        return BaseErrorConsts.RET_CONFLICT;
     }
 
     protected long getAlreadyExistCode() {
-        return RetCodeConsts.RET_CONFLICT;
+        return BaseErrorConsts.RET_CONFLICT;
     }
 }

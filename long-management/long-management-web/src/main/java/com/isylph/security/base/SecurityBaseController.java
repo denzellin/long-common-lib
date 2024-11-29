@@ -1,7 +1,7 @@
 package com.isylph.security.base;
 
 import com.isylph.basis.consts.CommonConsts;
-import com.isylph.basis.consts.RetCodeConsts;
+import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.basis.jwt.beans.BaseJwtUser;
 import com.isylph.basis.security.BaseSpringSecurityController;
@@ -25,7 +25,7 @@ public class SecurityBaseController extends BaseSpringSecurityController {
             return ((SessionUserContextVO) principal);
         }
         log.error("failed to get member info");
-        throw new ReturnException(RetCodeConsts.LOGIN_TIMEOUT);
+        throw new ReturnException(BaseErrorConsts.LOGIN_TIMEOUT);
     }
 
 

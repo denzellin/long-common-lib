@@ -39,7 +39,10 @@ public class ErrorAnnotationScanner implements BeanFactoryPostProcessor {
                 for(Field item: fields) {
 
                     if(Modifier.isStatic(item.getModifiers())){
-
+                        ErrorItem anno = item.getAnnotation(ErrorItem.class);
+                        if (anno == null) {
+                            continue;
+                        }
                         item.setAccessible(true);
 
                         // 取RetCode中错误码字段名称
@@ -47,16 +50,12 @@ public class ErrorAnnotationScanner implements BeanFactoryPostProcessor {
 
                         Long val = (long)item.get(clazz);
 
-                        ErrorItem anno = item.getAnnotation(ErrorItem.class);
-
-                        if (anno != null){
-                            ErrorDTO vo = new ErrorDTO()
-                                    .setModule(moduleName)
-                                    .setName(errName)
-                                    .setVal(val)
-                                    .setAnnotation(anno.value());
-                            errMap.put(val, vo);
-                        }
+                        ErrorDTO vo = new ErrorDTO()
+                                .setModule(moduleName)
+                                .setName(errName)
+                                .setVal(val)
+                                .setAnnotation(anno.value());
+                        errMap.put(val, vo);
                     }
 
                 }
