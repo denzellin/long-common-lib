@@ -13,6 +13,7 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="role" property="role" />
+        <result column="url" property="url" />
         <result column="remark" property="remark" />
         <result column="sys" property="sys" />
         <result column="member" property="member" />
@@ -32,14 +33,7 @@
 
     <select id="getUserRoles" resultMap="RoleVoResultMap">
         SELECT
-            id,
-            `NAME`,
-            role,
-            remark,
-            sys,
-            `member`
-        FROM
-             sys_role  sr
+            id, `name`, role, url, remark, sys, `member` FROM sys_role  sr
         WHERE
             EXISTS(
             SELECT * FROM sys_role_user sru WHERE sr.id = sru.role_id and sru.user_id = #{userId}

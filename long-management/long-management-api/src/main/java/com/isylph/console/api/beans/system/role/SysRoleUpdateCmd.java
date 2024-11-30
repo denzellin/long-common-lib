@@ -20,6 +20,7 @@ public class SysRoleUpdateCmd extends BaseCmd {
 
     private String role;
     private String name;
+    private String url;
     private String remark;
 
 }

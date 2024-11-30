@@ -39,6 +39,12 @@ public class SysRolePO implements Serializable {
      */
     private String role;
 
+
+    /**
+     * 角色默认页面路由
+     */
+    private String url;
+
     /**
      * 备注
      */

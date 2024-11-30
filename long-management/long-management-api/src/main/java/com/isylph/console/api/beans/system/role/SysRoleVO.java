@@ -22,6 +22,8 @@ public class SysRoleVO extends BaseVO {
 
     private String role;
 
+    private String url;
+
     private String remark;
 
     private Integer sys;

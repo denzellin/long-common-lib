@@ -20,6 +20,8 @@ public class SysRoleSaveCmd extends BaseCmd {
 
     private String role;
 
+    private String url;
+
     private String remark;
 
 }

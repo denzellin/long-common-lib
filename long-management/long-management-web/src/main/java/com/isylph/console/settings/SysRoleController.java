@@ -85,6 +85,7 @@ public class SysRoleController
         newPo.setRemark(request.getRemark());
         newPo.setName(request.getName());
         newPo.setRole(request.getRole());
+        newPo.setUrl(request.getUrl());
         sysRoleService.updateById(newPo);
         return HttpRetData.success();
     }

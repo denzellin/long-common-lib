@@ -7,6 +7,7 @@ import com.isylph.console.api.beans.common.GetPermissionVO;
 import com.isylph.console.api.beans.common.PermissionVO;
 import com.isylph.console.api.beans.system.func.SysFuncVO;
 import com.isylph.console.api.beans.system.menu.SysMenuVO;
+import com.isylph.console.api.beans.system.role.SysRoleVO;
 import com.isylph.console.settings.service.SysRoleFuncService;
 import com.isylph.console.settings.service.SysRoleMenuService;
 import com.isylph.console.settings.service.SysRoleUserService;
@@ -130,7 +131,18 @@ public class CommonController extends SecurityBaseController {
         return HttpRetData.success(vo);
     }
 
-    @Operation(summary = "修改当前登录用户信息")
+    @Operation(summary = "当前登录用户的默认路由")
+    @GetMapping(value = "/profile/default-route")
+    public HttpRetData<List<String>> getUserDefaultRoute() {
+        List<SysRoleVO> roleList = sysRoleUserService.getUserRoles(getCurrentAccountId());
+        List<String> urls = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(roleList)){
+            roleList.forEach(role -> urls.add(role.getUrl()));
+        }
+        return HttpRetData.success(urls);
+    }
+
+    @Operation(description = "修改当前登录用户信息")
     @PostMapping(value = "/profile/u")
     public HttpRetData updateUser(@RequestBody SysOperatorUpdateCmd saveVo) {
 

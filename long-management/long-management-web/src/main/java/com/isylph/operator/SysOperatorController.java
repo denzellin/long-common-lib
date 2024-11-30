@@ -13,9 +13,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,40 +34,40 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Tag(name = "运维账户", description = "400")
 @RestController
-@RequestMapping("/console/operator")
+@RequestMapping("/console")
 public class SysOperatorController{
 
     @Autowired
     private OperatorApplicationService operatorApplicationService;
 
-    @Operation(summary = "用户账号", method = "/**", operationId = "001")
+    @Operation(summary = "用户账号", method = "operator/**", operationId = "001")
     public HttpRetData demo() {
         return HttpRetData.success();
     }
 
-    @PostMapping("/c")
+    @PostMapping("/operator")
     @Operation(summary = "创建用户")
     HttpRetData add( @RequestBody SysOperatorSaveCmd request) {
         operatorApplicationService.createOperator(request);
         return HttpRetData.success();
     }
 
-    @PostMapping(path = "/d")
+    @DeleteMapping(path = "/operator/{id}")
     @Operation(summary = "删除数据")
-    HttpRetData deleteByPrimaryKey(@RequestParam Long id) {
+    HttpRetData deleteByPrimaryKey(@PathVariable("id") Long id) {
         operatorApplicationService.removeOperator(id);
         return HttpRetData.success();
     }
 
 
-    @PostMapping(path = {"/u"})
+    @PutMapping(path = {"/operator"})
     @Operation(summary = "编辑记录")
     HttpRetData updateByPrimaryKey(@RequestBody SysOperatorUpdateCmd request) {
         operatorApplicationService.updateOperator(request);
         return HttpRetData.success();
     }
 
-    @GetMapping(path = {"/r/{id}"})
+    @GetMapping(path = {"/operator/{id}"})
     @Operation(summary = "根据主键查询")
     HttpRetData getByPrimaryKey(@PathVariable(name = "id") Long id) {
 
@@ -74,7 +76,7 @@ public class SysOperatorController{
 
     }
 
-    @PostMapping(path = "/r")
+    @PostMapping(path = "/operator/r")
     @Operation(summary = "根据筛选条件查询列表")
     HttpRetData listByFilter(@RequestBody SysOperatorQuery query) {
 
@@ -84,7 +86,7 @@ public class SysOperatorController{
 
 
     @Operation(summary = "修改密码")
-    @PostMapping(value = "/password")
+    @PutMapping(value = "/operator/password")
     public HttpRetData changePassword(@RequestBody PasswordModifyCmd vo){
 
         operatorApplicationService.updatePassword(vo.getOperatorId(), vo.getPassword());

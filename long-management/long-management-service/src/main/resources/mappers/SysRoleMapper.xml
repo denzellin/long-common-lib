@@ -9,6 +9,7 @@
         <result column="role" property="role" />
         <result column="remark" property="remark" />
         <result column="sys" property="sys" />
+        <result column="url" property="url" />
         <result column="member" property="member" />
     </resultMap>
 
@@ -16,6 +17,7 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="role" property="role" />
+        <result column="url" property="url" />
         <result column="remark" property="remark" />
         <result column="sys" property="sys" />
         <result column="member" property="member" />
@@ -23,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, `name`, `role`, remark, sys, `member`
+        id, `name`, `role`, url, remark, sys, `member`
     </sql>
     <select id="selectViewListPage" resultMap="VoResultMap">
         select
