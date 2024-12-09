@@ -58,13 +58,13 @@ public class GeneratorServiceEntity {
     @Test
     public void generateCode() {
 
-        String url = "jdbc:mysql://mt.isylph.com:620/track_factory?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&nullNamePatternMatchesAll=true&allowPublicKeyRetrieval=true";
-        String username = "sqladmin";
-        String password = "Sylph&^2021";
-        String outDir = "/Volumes/DevOps/code/myBatisGen";
+        String url = "jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&nullNamePatternMatchesAll=true&allowPublicKeyRetrieval=true";
+        String username = "root";
+        String password = "password";
+        String outDir = "/code/myBatisGen";
 
         String packageName = "com.isylph.device.persistence";
-        List<String> tableNameList = Arrays.asList("device_vehicle"/*, ""*/);
+        List<String> tableNameList = Arrays.asList("device"/*, ""*/);
 
 
         FastAutoGenerator.create(url, username, password)
