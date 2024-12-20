@@ -18,6 +18,7 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import org.springframework.util.CollectionUtils;
 
 @EnableIntegrationManagement(defaultLoggingEnabled = "${mqtt.logging: false}")
 @Configuration
@@ -158,7 +159,7 @@ public class MqttInitiator {
     public MessageProducer inbound() {
         // 可以同时消费（订阅）多个Topic
 
-        if(StringUtils.isEmpty(consumerDefaultTopic)){
+        if(consumerDefaultTopic == null || consumerDefaultTopic.length == 0) {
             consumerDefaultTopic = null;
         }
 
