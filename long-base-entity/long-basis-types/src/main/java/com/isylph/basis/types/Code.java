@@ -40,9 +40,7 @@ public class Code  extends BaseType {
             return null;
         }
 
-        List<String> codes = Arrays.asList(StringUtils.split(code, "\\."));
-
-        return codes;
+        return Arrays.asList(code.split("\\."));
     }
 
     List<Long> toLongArray(){
