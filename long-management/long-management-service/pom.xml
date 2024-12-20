@@ -147,14 +147,8 @@
                             <version>${mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                 </configuration>
             </plugin>
-          <!--  <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>-->
             <!-- 打包时跳过测试 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

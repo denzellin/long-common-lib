@@ -41,22 +41,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-
-        <!--mybatisplus genrator-->
-<!--
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-            <version>2.2</version>
-            <scope>test</scope>
-        </dependency>-->
-        <!--mybatisplus genrator-->
     </dependencies>
 
     <build>
@@ -92,8 +76,6 @@
                             <version>${mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
