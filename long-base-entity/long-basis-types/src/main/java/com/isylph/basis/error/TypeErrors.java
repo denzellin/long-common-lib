@@ -15,9 +15,6 @@ public class TypeErrors extends BaseErrorConsts {
     @ErrorItem("手机号码长度错误")
     public final static long INVALID_LENGTH = define(BASE);
 
-    @ErrorItem("状态无效")
-    public final static long INVALID_ACTIVATE_STATUS  = define(BASE);
-
     @ErrorItem("身份证号无效")
     public final static long INVALID_ID_NO = define(BASE);
 
