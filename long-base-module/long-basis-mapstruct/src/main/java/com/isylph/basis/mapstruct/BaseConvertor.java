@@ -1,5 +1,11 @@
 package com.isylph.basis.mapstruct;
 
+
+
+import com.isylph.basis.types.ChinaIdNo;
+import com.isylph.basis.types.Email;
+import com.isylph.basis.types.Mobile;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -46,8 +52,6 @@ public interface BaseConvertor {
         if(time == null || time.trim().isEmpty()){
             return null;
         }
-
-
         DateTimeFormatter sdf = getSdf();
 
         return LocalDateTime.parse(time, sdf) ;
@@ -66,5 +70,27 @@ public interface BaseConvertor {
 
     default BigDecimal toBigDecimal(double value) {
         return new BigDecimal(value);
+    }
+
+
+    default Mobile toMobile(String mobile) {
+        if (mobile == null || mobile.trim().isEmpty()) {
+            return null;
+        }
+        return new Mobile(mobile);
+    }
+
+    default Email toEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return null;
+        }
+        return new Email(email);
+    }
+
+    default ChinaIdNo toChinaIdNo(String chinaIdNo) {
+        if (chinaIdNo == null || chinaIdNo.trim().isEmpty()) {
+            return null;
+        }
+        return new ChinaIdNo(chinaIdNo);
     }
 }
