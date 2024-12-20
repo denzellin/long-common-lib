@@ -4,10 +4,11 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtils extends org.springframework.util.StringUtils {
+public class StringUtils {
 
     public static boolean isEmpty(String s){
-        return !org.springframework.util.StringUtils.hasLength(s);
+        return s == null || s.trim().isEmpty();
+
     }
 
     public static boolean isNotEmpty(String s){
