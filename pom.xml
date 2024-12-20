@@ -29,8 +29,6 @@
     <properties>
         <!--通过一下参数指定使用JAVA11编译-->
         <maven.compiler.release>17</maven.compiler.release>
-
-
         <def_version>0.0.5-SNAPSHOT</def_version>
 
         <!-- =================================jar版本号================================================= -->
@@ -43,9 +41,6 @@
 
         <jersey-bundle.version>1.19.1</jersey-bundle.version>
 
-
-        <!-- java ee jar 包 版本号-->
-        <javaee_api_version>8.0</javaee_api_version>
         <mysql.version>9.1.0</mysql.version>
 
 
