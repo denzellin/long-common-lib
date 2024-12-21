@@ -20,6 +20,8 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.util.CollectionUtils;
 
+import java.sql.Array;
+
 @EnableIntegrationManagement(defaultLoggingEnabled = "${mqtt.logging: false}")
 @Configuration
 public class MqttInitiator {
@@ -160,7 +162,7 @@ public class MqttInitiator {
         // 可以同时消费（订阅）多个Topic
 
         if(consumerDefaultTopic == null || consumerDefaultTopic.length == 0) {
-            consumerDefaultTopic = null;
+            consumerDefaultTopic = new String[]{"/topic-"};
         }
 
         MqttPahoMessageDrivenChannelAdapter adapter =
