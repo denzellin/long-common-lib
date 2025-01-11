@@ -23,8 +23,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity.HttpBasicSpec;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +32,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,6 +55,16 @@ public class WebSecurityConfig implements BaseSecurityConfig {
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
+    private final List<String> finalIgnoredUrls = new ArrayList<>(ignoreUrls);
+
+    public void addIgnoredUrl(String url){
+        if (finalIgnoredUrls.contains(url)){
+            return;
+        }
+        finalIgnoredUrls.add(url);
+    }
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -67,7 +76,7 @@ public class WebSecurityConfig implements BaseSecurityConfig {
                     String requestURI = object.getRequest().getRequestURI();
                     AtomicBoolean ignored = new AtomicBoolean(false);
                     if (authentication.get() instanceof AnonymousAuthenticationToken) {
-                        ignoreUrls.forEach(url-> {
+                        finalIgnoredUrls.forEach(url-> {
                             if (antPathMatcher.match(url, requestURI)){
                                 ignored.set(true);
                             }
