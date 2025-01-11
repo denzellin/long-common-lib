@@ -3,6 +3,7 @@ package com.isylph.security.jwt;
 import com.isylph.basis.security.BaseAuthenticationService;
 import com.isylph.security.beans.SessionUserContextVO;
 import com.isylph.security.http.BodyReaderHttpServletRequestWrapper;
+import com.isylph.security.service.LongUserDetailsService;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,9 +22,10 @@ public class JWTAuthenticationFilter
 
 
     private final UserTokenAssemblerService jwtTokenService;
-
-    public JWTAuthenticationFilter(UserTokenAssemblerService jwtService) {
-        jwtTokenService = jwtService;
+    private final LongUserDetailsService userService;
+    public JWTAuthenticationFilter(UserTokenAssemblerService jwtService, LongUserDetailsService userService) {
+        this.jwtTokenService = jwtService;
+        this.userService = userService;
     }
 
     @Override
@@ -60,6 +62,11 @@ public class JWTAuthenticationFilter
     @Override
     public UserTokenAssemblerService getJwtService() {
         return jwtTokenService;
+    }
+
+    @Override
+    public boolean checkAppSecret(String appId, String secretKey) {
+        return userService.checkAppSecret(appId, secretKey);
     }
 
     @Override

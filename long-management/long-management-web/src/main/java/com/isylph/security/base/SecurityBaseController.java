@@ -3,7 +3,7 @@ package com.isylph.security.base;
 import com.isylph.basis.consts.CommonConsts;
 import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
-import com.isylph.basis.jwt.beans.BaseJwtUser;
+import com.isylph.basis.jwt.entities.BaseJwtUser;
 import com.isylph.basis.security.BaseSpringSecurityController;
 import com.isylph.console.api.beans.system.role.SysRoleVO;
 import com.isylph.security.beans.SessionUserContextVO;

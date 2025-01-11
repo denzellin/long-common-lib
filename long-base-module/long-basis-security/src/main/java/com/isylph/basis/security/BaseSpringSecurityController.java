@@ -3,7 +3,7 @@ package com.isylph.basis.security;
 import com.isylph.basis.base.BaseCmd;
 import com.isylph.basis.consts.BaseErrorConsts;
 import com.isylph.basis.controller.exception.ReturnException;
-import com.isylph.basis.jwt.beans.BaseJwtUser;
+import com.isylph.basis.jwt.entities.BaseJwtUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -65,10 +65,9 @@ public class BaseSpringSecurityController {
         }
         Object principal = au.getPrincipal();
 
-        if (principal instanceof BaseJwtUser){
+        if (principal instanceof BaseJwtUser jwt){
             log.debug("{}", principal);
 
-            BaseJwtUser jwt = (BaseJwtUser)principal;
             req.setOpAccount(jwt.getUsername());
             req.setOpAccountId(jwt.getId());
             req.setOpType(jwt.getType());

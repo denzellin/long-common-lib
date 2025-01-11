@@ -16,6 +16,7 @@
         <module>long-basis-rpc-http</module>
         <module>long-basis-persistence</module>
         <module>long-basis-controller</module>
+        <module>long-basis-jwt</module>
         <module>long-basis-security</module>
         <module>long-basis-mapstruct</module>
         <module>long-basis-web-quickstart</module>

@@ -2,7 +2,8 @@ package com.isylph.basis.security;
 
 
 import com.isylph.basis.jwt.BaseJwtTokenService;
-import com.isylph.basis.jwt.beans.BaseJwtUser;
+import com.isylph.basis.jwt.JwtTokenService;
+import com.isylph.basis.jwt.entities.BaseJwtUser;
 import com.isylph.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public interface BaseAuthenticationService<T extends BaseJwtUser, S extends BaseJwtTokenService<T>> {
@@ -31,6 +31,7 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
     }
 
     S getJwtService();
+    boolean checkAppSecret(String appId, String secretKey);
 
     default UsernamePasswordAuthenticationToken getAuthentication(String token){
 
@@ -56,15 +57,13 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
 
     default UsernamePasswordAuthenticationToken getAuthentication(String appId, String secretKey) {
 
-        T memberVo = createSessionUserContext();
+        T user = createSessionUserContext();
 
-        memberVo
-                .setUsername("feignClient")
-                .setType(10);
+        user.setUsername("feignClient");
 
         // 当前对Feign客户端开放全部权限
         List<String> roles = List.of(BaseSecurityConfig.fullRightRole);
-        return createAuthenticationToken(memberVo,memberVo, roles);
+        return createAuthenticationToken(user,user, roles);
     }
 
 
@@ -91,17 +90,33 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
 
             return authenticationToken.getCredentials();
 
-        } /*else if (!StringUtils.isEmpty(appId) && !StringUtils.isEmpty(secretKey)){
+        } else if (!StringUtils.isEmpty(appId) && !StringUtils.isEmpty(secretKey)){
+
+            if (!checkAppSecret(appId, secretKey)){
+                return null;
+            }
+
+            T user = createSessionUserContext();
+
+            // 当前对Feign客户端开放全部权限
+            List<String> roles = List.of(BaseSecurityConfig.fullRightRole);
+
+            user.setUsername(jwtService.getHeaderUserName(request))
+                    .setId(jwtService.getHeaderUserId(request))
+                    .setUsername(jwtService.getHeaderUserName(request))
+                    .setType(jwtService.getHeaderUserType(request))
+                    .setName(jwtService.getHeaderName(request))
+                    .setRoles(roles);
 
             try{
-                UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(appId, secretKey);
+                UsernamePasswordAuthenticationToken authenticationToken =  createAuthenticationToken(user,user, roles);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 return authenticationToken.getCredentials();
             }catch (RuntimeException e){
                 return null;
             }
 
-        } */
+        }
 
         return null;
     }

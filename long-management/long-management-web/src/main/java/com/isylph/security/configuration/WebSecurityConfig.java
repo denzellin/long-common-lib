@@ -95,7 +95,7 @@ public class WebSecurityConfig implements BaseSecurityConfig {
                     return new AuthorizationDecision(false);
                 }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JWTAuthenticationFilter(userTokenAssemblerService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(userTokenAssemblerService, longUserDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JWTUserPasswordAuthenticationFilter(authenticationManager, userTokenAssemblerService))
                 .exceptionHandling(Customizer.withDefaults())
                 .httpBasic(HttpBasicConfigurer::disable)

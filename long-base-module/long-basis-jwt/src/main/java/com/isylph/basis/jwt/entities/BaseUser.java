@@ -1,17 +1,10 @@
-package com.isylph.basis.jwt.beans;
+package com.isylph.basis.jwt.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-public class BaseJwtUser implements UserDetails {
+public class BaseUser {
 
     private Long id;
 
@@ -19,9 +12,7 @@ public class BaseJwtUser implements UserDetails {
 
     private String username;
 
-    private Integer type;
-
-    private String password;
+    private String type;
 
     private boolean accountNonExpired;
 
@@ -39,7 +30,7 @@ public class BaseJwtUser implements UserDetails {
 
     //private Collection<? extends GrantedAuthority> authorities;
 
-    public BaseJwtUser() {
+    public BaseUser() {
         accountNonExpired = true;
         accountNonLocked = true;
         credentialsNonExpired = true;
@@ -47,7 +38,7 @@ public class BaseJwtUser implements UserDetails {
     }
 
 
-    public BaseJwtUser(Long id, String user, String role) {
+    public BaseUser(Long id, String user, String role) {
         accountNonExpired = true;
         accountNonLocked = true;
         credentialsNonExpired = true;
@@ -62,7 +53,7 @@ public class BaseJwtUser implements UserDetails {
         return id;
     }
 
-    public BaseJwtUser setId(Long id) {
+    public BaseUser setId(Long id) {
         this.id = id;
         return this;
     }
@@ -71,21 +62,21 @@ public class BaseJwtUser implements UserDetails {
         return name;
     }
 
-    public BaseJwtUser setName(String name) {
+    public BaseUser setName(String name) {
         this.name = name;
         return this;
     }
 
-    public BaseJwtUser setUsername(String username) {
+    public BaseUser setUsername(String username) {
         this.username = username;
         return this;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public BaseJwtUser setType(Integer type) {
+    public BaseUser setType(String type) {
         this.type = type;
         return this;
     }
@@ -94,56 +85,40 @@ public class BaseJwtUser implements UserDetails {
         return roles;
     }
 
-    public BaseJwtUser setRoles(List<String> roles) {
+    public BaseUser setRoles(List<String> roles) {
         this.roles = roles;
         return this;
     }
 
     public void setPassword(String password) {
-        this.password = password;
     }
 
-    @Override
-    @JsonIgnore
-    public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        if (CollectionUtils.isEmpty(roles)){
-            return null;
-        }
-        List<SimpleGrantedAuthority> aus = new ArrayList<>();
-        for(String s: roles){
-            aus.add(new SimpleGrantedAuthority(s));
-        }
-
-        return aus;
-    }
-
-    @Override
     public String getUsername() {
         return username;
     }
 
-    @Override
+
     public String getPassword() {
         return "";
     }
 
-    @Override
+
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
 
-    @Override
+
     public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
 
-    @Override
+
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
 
-    @Override
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -156,17 +131,4 @@ public class BaseJwtUser implements UserDetails {
         this.expiredTime = expiredTime;
     }
 
-    @Override
-    public String toString() {
-        return "BaseJwtUserVO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                ", type=" + type +
-                ", accountNonExpired=" + accountNonExpired +
-                ", accountNonLocked=" + accountNonLocked +
-                ", credentialsNonExpired=" + credentialsNonExpired +
-                ", enabled=" + enabled +
-                '}';
-    }
 }

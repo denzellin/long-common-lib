@@ -9,6 +9,7 @@ import com.isylph.security.beans.LoadUserVO;
 import com.isylph.security.beans.SessionUserContextVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,11 +17,17 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class LongUserDetailsService implements UserDetailsService {
 
+    @Value("${services.app-id}")
+    private String serviceAppId;
+
+    @Value("${services.app-secret}")
+    private String serviceSecret;
 
     @Autowired
     private OperatorApplicationService operatorApplicationService;
@@ -28,11 +35,12 @@ public class LongUserDetailsService implements UserDetailsService {
     @Autowired
     private SysRoleUserService sysRoleUserService;
 
-
-
     public LongUserDetailsService() {
     }
 
+    public Boolean checkAppSecret(String appId, String appSecret) {
+        return Objects.equals(appId, serviceAppId) && Objects.equals(appSecret, serviceSecret);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

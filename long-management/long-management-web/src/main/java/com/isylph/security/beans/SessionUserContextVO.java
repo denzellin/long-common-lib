@@ -1,6 +1,6 @@
 package com.isylph.security.beans;
 
-import com.isylph.basis.jwt.beans.BaseJwtUser;
+import com.isylph.basis.jwt.entities.BaseJwtUser;
 import com.isylph.console.api.beans.system.role.SysRoleVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

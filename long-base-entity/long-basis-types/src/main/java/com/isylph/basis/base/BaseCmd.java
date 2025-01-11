@@ -27,7 +27,7 @@ public class BaseCmd implements Serializable {
     /**
      * 发起请求的当前用户的类型
      */
-    private Integer opType;
+    private String opType;
 
     /**
      * 发起请求的当前用户的账号
