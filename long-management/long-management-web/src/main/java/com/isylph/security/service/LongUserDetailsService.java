@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Service
 public class LongUserDetailsService implements UserDetailsService {
 
     @Value("${services.app-id}")

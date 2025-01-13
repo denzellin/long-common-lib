@@ -123,12 +123,6 @@ public class WebSecurityConfig implements BaseSecurityConfig {
         return new JWTAuthenticationProvider(longUserDetailsService);
     }
 
-
-    @Bean
-    protected LongUserDetailsService userAccountService() {
-        return new LongUserDetailsService();
-    }
-
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         return baseCorsConfigurationSource();
