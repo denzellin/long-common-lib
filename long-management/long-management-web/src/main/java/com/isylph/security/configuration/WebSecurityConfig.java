@@ -75,15 +75,16 @@ public class WebSecurityConfig implements BaseSecurityConfig {
                     //获取当前请求的 URL 地址
                     String requestURI = object.getRequest().getRequestURI();
                     AtomicBoolean ignored = new AtomicBoolean(false);
-                    if (authentication.get() instanceof AnonymousAuthenticationToken) {
-                        finalIgnoredUrls.forEach(url-> {
-                            if (antPathMatcher.match(url, requestURI)){
-                                ignored.set(true);
-                            }
-                        });
-                        if (ignored.get() ) {
-                            return new AuthorizationDecision(true);
+                    finalIgnoredUrls.forEach(url-> {
+                        if (antPathMatcher.match(url, requestURI)){
+                            ignored.set(true);
                         }
+                    });
+                    if (ignored.get() ) {
+                        return new AuthorizationDecision(true);
+                    }
+
+                    if (authentication.get() instanceof AnonymousAuthenticationToken) {
                         return new AuthorizationDecision(false);
                     }
 
