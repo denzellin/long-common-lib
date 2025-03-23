@@ -2,6 +2,7 @@ package com.isylph.basis.controller.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isylph.utils.json.JacksonUtils;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -30,5 +31,9 @@ public class SpringMvcBaseConfig implements WebMvcConfigurer {
         return converter;
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToLocalDateTimeConverter());
+    }
 
 }
