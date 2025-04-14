@@ -11,11 +11,12 @@ import java.time.ZoneId;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 @Accessors(chain = true)
 public class BaseListQuery extends BaseCmd {
 
     public static final String INVALID_PERMISSION_CODE = "-";
+
+    private final static int MAX_CNT = 10000;
 
     private String permissionCode;
 
@@ -40,21 +41,31 @@ public class BaseListQuery extends BaseCmd {
      */
     private Integer cnt;
 
-    public void setCurrent(Integer current) {
-        this.current = current;
-        int size = pageSize!=null?pageSize:20;
-        offset =(current -1)*size;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-        cnt = pageSize;
-        offset = current != null?(current -1)*cnt:0;
-    }
 
     private Integer current;
 
     private Integer pageSize;
+
+    public BaseListQuery() {
+        this.offset = 0;
+        this.current = 1;
+        this.pageSize = MAX_CNT;
+        this.cnt = MAX_CNT;
+    }
+
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+        int size = pageSize!=null?pageSize:20;
+        this.offset =(current -1)*size;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+        this.cnt = pageSize;
+        this.offset = current != null?(current -1)*cnt:0;
+    }
+
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
