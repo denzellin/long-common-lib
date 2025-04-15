@@ -94,7 +94,15 @@ public interface JwtTokenService<T extends BaseUser> {
 
     //是否已过期
     default boolean isExpired(String token){
-        return getTokenBody(token).getExpiration().before(new Date());
+        Claims claims= getTokenBody(token);
+        if (claims == null){
+            return true;
+        }
+        Date date = claims.getExpiration();
+        if (date == null){
+            return true;
+        }
+        return date.before(new Date());
     }
 
     default boolean isExpired(Claims claims ){
