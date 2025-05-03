@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 @Service
 public class LongUserDetailsService implements UserDetailsService {
 
-    @Value("${services.app-id}")
+    @Value("${services.app-id:default}")
     private String serviceAppId;
 
-    @Value("${services.app-secret}")
+    @Value("${services.app-secret:default2025}")
     private String serviceSecret;
 
     @Autowired
