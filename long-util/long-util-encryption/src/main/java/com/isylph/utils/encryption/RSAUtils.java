@@ -423,7 +423,15 @@ public class RSAUtils {
      * @return byte[]
      */
     public static byte[] hexStringToBytes(String hex){
-        int len = (hex.length() / 2);
+        int len = hex.length();
+
+        if ((len & 1) != 0) {
+            hex = "0" + hex;
+            len = hex.length();
+        }
+
+        len = len >> 1;
+
         hex = hex.toUpperCase();
         byte[] result = new byte[len];
         char[] chars = hex.toCharArray();
