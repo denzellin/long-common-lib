@@ -98,6 +98,10 @@ public class DateTimeUtils {
         return localDateTime.toLocalTime();
     }
 
+    public static String getDateTimeStr(LocalDateTime ldt, String pattern) {
+        DateTimeFormatter sdf_date = DateTimeFormatter.ofPattern(pattern);
+        return ldt.format(sdf_date);
+    }
 
 
     /**
