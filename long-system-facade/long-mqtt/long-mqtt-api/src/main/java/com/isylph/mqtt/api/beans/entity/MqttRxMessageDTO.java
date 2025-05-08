@@ -2,11 +2,13 @@ package com.isylph.mqtt.api.beans.entity;
 
 import com.isylph.basis.beans.BaseDTO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class MqttRxMessageDTO<T> extends BaseDTO {
 

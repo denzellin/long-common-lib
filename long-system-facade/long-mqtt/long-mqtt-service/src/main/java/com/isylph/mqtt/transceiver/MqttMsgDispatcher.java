@@ -57,6 +57,7 @@ public class MqttMsgDispatcher {
 
             if (match(filterMap.get(topic), rx.getReceivedTopic())){
                 processor.procMsg(rx);
+                cnt++;
             }
         }
 
