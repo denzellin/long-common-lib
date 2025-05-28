@@ -85,6 +85,9 @@ public class MqttInitiator {
         // 设置连接的用户名
         options.setUserName(userName);
 
+        options.setAutomaticReconnect(true);
+        options.setMaxReconnectDelay(5000);
+
         // 设置连接的密码
         options.setPassword(password.toCharArray());
         options.setServerURIs(new String[]{url});
