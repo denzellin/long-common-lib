@@ -1,18 +1,16 @@
 package com.isylph.notification.task;
 
-import com.isylph.notification.beans.SendSmsReq;
-import com.isylph.notification.service.PostSmsService;
-import com.isylph.notification.service.SmsClient;
+import com.isylph.notification.entity.SendSmsCmd;
+import com.isylph.notification.service.impl.AliSmsClient;
+import com.isylph.notification.service.impl.SmsRemoteService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.retry.annotation.EnableRetry;
 
 @Slf4j
-@EnableRetry
 public class SmsServiceThread implements Runnable {
 
-    private SmsClient client;
+    private AliSmsClient client;
 
-    public SmsServiceThread(SmsClient c) throws Exception {
+    public SmsServiceThread(AliSmsClient c) throws Exception {
         if (null == c){
             log.error("null sms client");
             throw new Exception();
@@ -27,7 +25,7 @@ public class SmsServiceThread implements Runnable {
             while (true) {
 
                 //从队列取出,队列为空时阻塞
-                SendSmsReq smsRequest = PostSmsService.takeSms();
+                SendSmsCmd smsRequest = SmsRemoteService.takeSms();
                 //发送短信，失败后重试
                 try {
                     client.send(smsRequest);
