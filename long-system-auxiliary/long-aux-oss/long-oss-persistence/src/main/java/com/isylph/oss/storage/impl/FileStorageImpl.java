@@ -36,9 +36,6 @@ public class FileStorageImpl implements FileStorage {
     @Autowired
     private FileServerManager fileServerManager;
 
-    private String generateRandomName(String suffix) {
-        return UUID.randomUUID() + "." + suffix;
-    }
 
     private String getLocalFileName(String module,
                                     String suffixName){

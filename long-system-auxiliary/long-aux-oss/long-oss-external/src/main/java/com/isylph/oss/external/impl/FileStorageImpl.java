@@ -67,11 +67,12 @@ public class FileStorageImpl implements FileStorage {
             log.info("bucket create: {}", bucketName);
         }
 
+        String storeFileName = generateRandomName(file.getSuffix());
         // 上传文件
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)
-                        .object(file.getFileName())     // 对象名
+                        .object(storeFileName)     // 对象名
                         .stream( file.getInputStream(),file.getSize(),-1 )
                         .contentType(file.getContentType())
                         .build()
@@ -81,7 +82,7 @@ public class FileStorageImpl implements FileStorage {
         return new OssFileAttachment()
                 .setGuid(new FileGuid(guid))
                 .setName(file.getFileName())
-                .setPath(bucketName + File.separator + file.getFileName());
+                .setPath(bucketName + File.separator + storeFileName);
     }
 
 }
