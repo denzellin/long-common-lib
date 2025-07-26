@@ -17,6 +17,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -80,7 +81,7 @@ public class FileStorageImpl implements FileStorage {
         return new OssFileAttachment()
                 .setGuid(new FileGuid(guid))
                 .setName(file.getFileName())
-                .setPath(bucketName);
+                .setPath(bucketName + File.separator + file.getFileName());
     }
 
 }
