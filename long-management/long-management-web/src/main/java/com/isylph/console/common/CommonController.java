@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -124,7 +125,7 @@ public class CommonController extends SecurityBaseController {
     }
 
     @Operation(summary = "当前登录用户信息")
-    @GetMapping(value = "/profile/r")
+    @GetMapping(value = "/profile")
     public HttpRetData<SysOperatorVO> userDetail() {
 
         SysOperatorVO vo = operatorApplicationService.getOperator(getCurrentAccountId());
@@ -143,7 +144,7 @@ public class CommonController extends SecurityBaseController {
     }
 
     @Operation(description = "修改当前登录用户信息")
-    @PostMapping(value = "/profile/u")
+    @PutMapping(value = "/profile")
     public HttpRetData updateUser(@RequestBody SysOperatorUpdateCmd saveVo) {
 
         saveVo.setId(getCurrentAccountId());
@@ -152,7 +153,7 @@ public class CommonController extends SecurityBaseController {
     }
 
     @Operation(summary = "修改当前登录用户密码")
-    @PostMapping(value = "/password/u")
+    @PutMapping(value = "/password")
     public HttpRetData updateUserPwd(String old, String newz) {
 
         SysOperatorVO vo = operatorApplicationService.login(getCurrentAccount(), old);
