@@ -2,7 +2,9 @@ package com.isylph.oss.application.impl;
 
 
 import com.isylph.basis.base.RetPage;
+import com.isylph.basis.controller.exception.ReturnException;
 import com.isylph.basis.types.FileData;
+import com.isylph.oss.api.consts.Errors;
 import com.isylph.oss.api.entity.OssFileLocationDTO;
 import com.isylph.oss.api.entity.OssFileLocationQuery;
 import com.isylph.oss.api.entity.OssFileLocationSaveCmd;
@@ -11,26 +13,34 @@ import com.isylph.oss.application.OssApplicationService;
 import com.isylph.oss.application.assembler.OssAssembler;
 import com.isylph.oss.domain.entity.GeneralFile;
 import com.isylph.oss.domain.entity.ImageFile;
+import com.isylph.oss.domain.entity.OssFileAttachment;
 import com.isylph.oss.domain.entity.OssFileLocation;
 import com.isylph.oss.domain.entity.PdfFile;
 import com.isylph.oss.domain.service.OssFileService;
 import com.isylph.oss.domain.types.FileGuid;
 import com.isylph.oss.domain.types.LocationId;
 import com.isylph.oss.domain.types.Module;
+import com.isylph.oss.persistence.conf.FileServerManager;
 import com.isylph.oss.repository.OssRepository;
 import com.isylph.oss.storage.FileStorage;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class OssApplicationServiceImpl implements OssApplicationService {
+
+    @Value("${oss.type:Local}")
+    private String ossType;
 
     @Autowired
     private OssRepository ossRepository;
@@ -42,8 +52,22 @@ public class OssApplicationServiceImpl implements OssApplicationService {
     private OssFileService ossFileService;
 
     @Autowired
+    private Map<String, FileStorage> fileStorageMap;
+
     private FileStorage fileStorage;
 
+    @Autowired
+    private FileServerManager fileServerManager;
+
+    @PostConstruct
+    public void init(){
+        String type = "fileStorage" + ossType;
+        fileStorage = fileStorageMap.get(type);
+        if (fileStorage == null){
+            log.warn("Invalid type: {}", type);
+            throw new IllegalArgumentException();
+        }
+    }
 
     @Override
     public OssFileLocationDTO findOssFileLocation(Long id) {
@@ -96,25 +120,38 @@ public class OssApplicationServiceImpl implements OssApplicationService {
         return ossRepository.removeOssFileLocation(new LocationId(id));
     }
 
-    @Override
-    public FileData saveImage(String module, String subdirectory, String fileName, InputStream fileStream) {
-        ImageFile file = ImageFile.create(module, subdirectory, fileName, fileStream, ossFileService);
+    private <T extends GeneralFile> FileData saveFile(T file) {
 
-        return fileStorage.saveFile(file);
+        try {
+            OssFileAttachment attachment = fileStorage.saveFile(file);
+            String url = fileServerManager.assembleUrl(attachment.getPath());
+            ossRepository.saveOssFileAttachment(attachment);
+            return new FileData(attachment.getGuid().getGuid(), url, file.getFileName());
+        }catch (Exception e) {
+            log.info("File to save file: {}", e.getMessage());
+            throw new ReturnException(Errors.UPLOAD_SAVE_FILE_FAIL);
+        }
     }
 
     @Override
-    public FileData savePdf(String module, String subdirectory, String fileName, InputStream fileStream) {
-        PdfFile file = PdfFile.create(module, subdirectory, fileName, fileStream, ossFileService);
+    public FileData saveImage(String module, String fileName, InputStream fileStream, long size, String contentType) {
+        ImageFile file = ImageFile.create(module, fileName, fileStream, size, contentType, ossFileService);
 
-        return fileStorage.saveFile(file);
+        return saveFile(file);
     }
 
     @Override
-    public FileData saveGeneralFile(String module, String subdirectory, String fileName, InputStream fileStream) {
-        GeneralFile file = GeneralFile.create(module, subdirectory, fileName, fileStream);
+    public FileData savePdf(String module, String fileName, InputStream fileStream, long size, String contentType) {
+        PdfFile file = PdfFile.create(module, fileName, fileStream, size, contentType, ossFileService);
 
-        return fileStorage.saveFile(file);
+        return saveFile(file);
+    }
+
+    @Override
+    public FileData saveGeneralFile(String module, String fileName, InputStream fileStream, long size, String contentType) {
+        GeneralFile file = GeneralFile.create(module, fileName, fileStream, size, contentType);
+
+        return saveFile(file);
     }
 
     @Override

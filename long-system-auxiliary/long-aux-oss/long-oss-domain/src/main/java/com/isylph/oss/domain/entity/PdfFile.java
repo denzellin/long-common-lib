@@ -12,11 +12,11 @@ import java.io.InputStream;
 
 @Getter
 public class PdfFile extends GeneralFile {
-    private PdfFile(String fileName, String subdirectory, Module module, String suffix, ByteArrayInputStream inputStream) {
-        super(fileName, subdirectory, module, suffix, inputStream);
+    private PdfFile(String fileName, Module module, String suffix, ByteArrayInputStream inputStream, Long size, String contentType) {
+        super(fileName, module, suffix, inputStream, size, contentType);
     }
 
-    public static PdfFile create(String module, String subdirectory, String fileName, InputStream fileStream, OssFileService ossFileService){
+    public static PdfFile create(String module, String fileName, InputStream fileStream, Long size, String contentType, OssFileService ossFileService){
 
         //通过文件头魔术值校验文件格式
         ByteArrayOutputStream byteArrayOutputStream = ossFileService.inputStreamCache(fileStream);
@@ -35,8 +35,7 @@ public class PdfFile extends GeneralFile {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(ar);
 
-        PdfFile file = new PdfFile(fileName, subdirectory, new Module(module), "pdf", inputStream);
-        return file;
+        return new PdfFile(fileName, new Module(module), "pdf", inputStream, size, contentType);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.isylph.oss.storage;
 
-import com.isylph.basis.types.FileData;
 import com.isylph.oss.domain.entity.GeneralFile;
+import com.isylph.oss.domain.entity.OssFileAttachment;
 
 public interface FileStorage {
 
-    <T extends GeneralFile> FileData saveFile(T file);
+    <T extends GeneralFile> OssFileAttachment saveFile(T file) throws Exception;
 
-    String readTextFile(String path);
+    default String readTextFile(String path){
+        return "";
+    }
 }

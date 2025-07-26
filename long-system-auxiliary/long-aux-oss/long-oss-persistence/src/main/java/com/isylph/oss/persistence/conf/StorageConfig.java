@@ -1,7 +1,7 @@
 package com.isylph.oss.persistence.conf;
 
 
-import com.isylph.oss.external.impl.OSSClientTool;
+import com.isylph.oss.external.impl.FileStorageImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class StorageConfig {
 
     @Bean
-    public OSSClientTool ossClientTool() {
-        return new OSSClientTool();
+    public FileStorageImpl ossClientTool() {
+        return new FileStorageImpl();
     }
 }

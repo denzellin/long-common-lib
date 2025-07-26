@@ -12,11 +12,11 @@ public class TextFile extends GeneralFile {
 
     private static final String TEXT_SUFFIX = "txt";
 
-    private TextFile(String subdirectory, Module module, ByteArrayInputStream inputStream) {
-        super("", subdirectory, module, TEXT_SUFFIX, inputStream);
+    private TextFile(Module module, ByteArrayInputStream inputStream, Long size) {
+        super("", module, TEXT_SUFFIX, inputStream, size, "text/plain");
     }
 
-    public static TextFile create(String module, String subdirectory, String content){
+    public static TextFile create(String module, String subdirectory, String content, long size){
 
         ByteArrayInputStream inputStream = null;
         try {
@@ -26,7 +26,7 @@ public class TextFile extends GeneralFile {
             return null;
         }
 
-        TextFile file = new TextFile(subdirectory, new Module(module), inputStream);
+        TextFile file = new TextFile(new Module(module), inputStream, size);
         return file;
     }
 

@@ -26,11 +26,11 @@ public interface OssApplicationService {
     int removeOssFileLocation(Long id);
 
 
-    FileData saveImage(String module, String subdirectory, String fileName, InputStream fileStream);
+    FileData saveImage(String module, String fileName, InputStream fileStream, long size, String contentType);
 
-    FileData savePdf(String module, String subdirectory, String fileName, InputStream fileStream);
+    FileData savePdf(String module, String fileName, InputStream fileStream, long size, String contentType);
 
-    FileData saveGeneralFile(String module, String subdirectory, String fileName, InputStream fileStream);
+    FileData saveGeneralFile(String module, String fileName, InputStream fileStream, long size, String contentType);
 
     String readTextFromFile(String path);
 

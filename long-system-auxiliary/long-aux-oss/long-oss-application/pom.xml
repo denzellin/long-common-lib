@@ -37,6 +37,11 @@
             <artifactId>long-basis-application</artifactId>
             <version>${def_version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.isylph</groupId>
+            <artifactId>long-oss-external</artifactId>
+            <version>${def_version}</version>
+        </dependency>
 
     </dependencies>
 

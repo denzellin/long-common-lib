@@ -14,11 +14,11 @@ import java.io.InputStream;
 @Getter
 public class ImageFile extends GeneralFile {
 
-    private ImageFile(String fileName, String subdirectory, Module module, String suffix, InputStream inputStream) {
-        super(fileName, subdirectory, module, suffix, inputStream);
+    private ImageFile(String fileName, Module module, String suffix, InputStream inputStream, Long size, String contentType) {
+        super(fileName, module, suffix, inputStream, size, contentType);
     }
 
-    public static ImageFile create(String module, String subdirectory, String fileName, InputStream fileStream, OssFileService ossFileService){
+    public static ImageFile create(String module, String fileName, InputStream fileStream, Long size, String contentType, OssFileService ossFileService){
 
         //通过文件头魔术值校验文件格式
         ByteArrayOutputStream byteArrayOutputStream = ossFileService.inputStreamCache(fileStream);
@@ -29,7 +29,7 @@ public class ImageFile extends GeneralFile {
         }
         ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
 
-        ImageFile file = new ImageFile(fileName, subdirectory, new Module(module), suffix, inputStream);
+        ImageFile file = new ImageFile(fileName, new Module(module), suffix, inputStream, size, contentType);
         return file;
     }
 

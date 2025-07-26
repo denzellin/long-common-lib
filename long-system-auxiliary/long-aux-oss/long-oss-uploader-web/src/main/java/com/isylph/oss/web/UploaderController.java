@@ -31,18 +31,17 @@ public class UploaderController {
     @PostMapping(value = "/{module}/{format}")
     public HttpRetData uploadImage(@Parameter(description = "通过指定模块来设置文件保存的目录") @PathVariable String module,
                                    @Parameter(description = "上传图片时为img, 上传PDF文件时是pdf, 其他格式时随意") @PathVariable String format,
-                                   @Parameter(description = "指定文件保存的子目录, 为\"\"时没有子目录") @RequestParam(required = false) String subdirectory,
                                    @RequestParam(value = "file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new ReturnException(Errors.UPLOAD_FILE_MUST_NOT_EMPTY);
         }
         FileData f = null;
         if (Objects.equals(format, "img")){
-            f = ossApplicationService.saveImage(module, subdirectory, file.getOriginalFilename(), file.getInputStream());
+            f = ossApplicationService.saveImage(module, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
         }else if (Objects.equals(format, "pdf")){
-            f = ossApplicationService.savePdf(module, subdirectory, file.getOriginalFilename(), file.getInputStream());
+            f = ossApplicationService.savePdf(module, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
         }else{
-            f = ossApplicationService.saveGeneralFile(module, subdirectory, file.getOriginalFilename(), file.getInputStream());
+            f = ossApplicationService.saveGeneralFile(module, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
         }
 
         return HttpRetData.success(f);
