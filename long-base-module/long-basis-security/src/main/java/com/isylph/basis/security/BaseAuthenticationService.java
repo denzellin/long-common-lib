@@ -6,13 +6,13 @@ import com.isylph.basis.jwt.JwtTokenService;
 import com.isylph.basis.jwt.entities.BaseJwtUser;
 import com.isylph.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public interface BaseAuthenticationService<T extends BaseJwtUser, S extends BaseJwtTokenService<T>> {
 
     default UsernamePasswordAuthenticationToken createAuthenticationToken(
@@ -44,7 +44,12 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
             return null;
         }
 
-        T memberVo = getJwtService().getUser(token);
+        T memberVo = null;
+        try{
+            memberVo = getJwtService().getUser(token);
+        }catch (RuntimeException ignored){
+
+        }
         if (memberVo == null){
             return null;
         }
