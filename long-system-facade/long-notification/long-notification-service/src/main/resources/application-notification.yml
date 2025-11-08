@@ -1,4 +1,17 @@
-
+spring:
+  mail:
+    # 支持从环境变量或系统属性读取，示例：SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD
+    host: ${SMTP_HOST:smtp.example.com}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    # 密码推荐通过环境变量注入，默认空（必须在运行时提供）
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${SMTP_SMTP_AUTH:true}
+          starttls:
+            enable: ${SMTP_STARTTLS_ENABLE:true}
 
 sms:
   logging: false
