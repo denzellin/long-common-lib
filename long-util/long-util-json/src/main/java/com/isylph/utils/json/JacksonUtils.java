@@ -43,6 +43,16 @@ public class JacksonUtils {
         MAPPER = serializingObjectMapper();
     }
 
+    public static boolean isJSON(String jsonInString) {
+        try {
+            // 尝试解析
+            MAPPER.readTree(jsonInString);
+            return true;
+        } catch (JsonProcessingException e) {
+            return false;
+        }
+    }
+
     public static String serialize(Object obj) {
         try {
             return MAPPER.writeValueAsString(obj);

@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
 /**
@@ -71,5 +72,13 @@ public abstract class BaseHttpServletRequestWrapper extends HttpServletRequestWr
     @Override
     public Enumeration<String> getHeaders(String name) {
         return super.getHeaders(name);
+    }
+
+    public String getCachedBody() {
+        return body == null ? null : new String(body, StandardCharsets.UTF_8);
+    }
+
+    public int getBodySize() {
+        return body == null ? 0 : body.length;
     }
 }
