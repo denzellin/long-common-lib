@@ -28,7 +28,7 @@ public class StringUtils {
         }
     }
 
-    public static final String replace(String line, String oldString, String newString) {
+    public static String replace(String line, String oldString, String newString) {
         int i = 0;
         if ((i = line.indexOf(oldString, i)) >= 0) {
 
