@@ -54,6 +54,9 @@ public class JacksonUtils {
     }
 
     public static String serialize(Object obj) {
+        if (obj == null){
+            return null;
+        }
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
@@ -63,6 +66,9 @@ public class JacksonUtils {
     }
 
     public static <T> T deserialize(String jsonText, TypeReference<T> type) {
+        if (jsonText == null){
+            return null;
+        }
         try {
             return MAPPER.readValue(jsonText, type);
         } catch (Exception e) {
@@ -72,6 +78,9 @@ public class JacksonUtils {
     }
 
     public static <T> T deserialize(String jsonText, Class<T> beanClass) {
+        if (jsonText == null){
+            return null;
+        }
         try {
             return MAPPER.readValue(jsonText, beanClass);
         } catch (Exception e) {
@@ -81,6 +90,9 @@ public class JacksonUtils {
     }
 
     public static JsonNode deserialize(String jsonText) {
+        if (jsonText == null){
+            return null;
+        }
         try {
             return MAPPER.readTree(jsonText);
         } catch (Exception e) {
@@ -90,6 +102,9 @@ public class JacksonUtils {
     }
 
     public static JsonNode toJsonNode(Object obj) {
+        if (obj == null){
+            return null;
+        }
         try {
             return MAPPER.readTree(serialize(obj));
         } catch (Exception e) {
@@ -99,6 +114,9 @@ public class JacksonUtils {
     }
 
     public static JsonNode stringToJsonNode(String str){
+        if (str == null){
+            return null;
+        }
         try {
             return MAPPER.readTree(str);
         } catch (JsonProcessingException e) {
