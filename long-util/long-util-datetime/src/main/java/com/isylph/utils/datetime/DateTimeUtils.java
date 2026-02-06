@@ -12,18 +12,18 @@ import java.util.Date;
 
 public class DateTimeUtils {
 
-    private static final ZoneId zone = ZoneId.systemDefault();
+    public static final ZoneId zone = ZoneId.systemDefault();
 
 
     /**
      * 注意在表示年的Y
      * jdk7和8，甚至jdk9(https://docs.oracle.com/javase/9/docs/api/java/text/SimpleDateFormat.html)，除了“y”，引入了"Y"，“Y”表示Week year，
      */
-    private static final String FORMATPATTERN_DATE = "yyyy-MM-dd";
+    public static final String FORMATPATTERN_DATE = "yyyy-MM-dd";
 
-    private static final String FORMATPATTERN_SHORT_DATE = "yyyyMMdd";
+    public static final String FORMATPATTERN_SHORT_DATE = "yyyyMMdd";
 
-    private static final String FORMATPATTERN_DATETIME = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMATPATTERN_DATETIME = "yyyy-MM-dd HH:mm:ss";
 
 
 
