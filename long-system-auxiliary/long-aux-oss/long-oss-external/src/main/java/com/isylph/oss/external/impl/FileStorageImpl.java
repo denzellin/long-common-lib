@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -60,7 +61,17 @@ public class FileStorageImpl implements FileStorage {
     public <T extends GeneralFile> OssFileAttachment saveFile(T file) throws Exception{
 
         // 检查桶是否存在，不存在则创建
-        String bucketName = file.getModule().getModule();
+
+        // 解析 module 路径
+        String[] pathSegments = file.getModule().getModule().split("/");
+        if (pathSegments.length == 0) {
+            throw new IllegalArgumentException("Module path cannot be empty");
+        }
+        String bucketName =pathSegments[0];
+        // 剩余部分为桶内路径
+        String objectPath = String.join("/", Arrays.copyOfRange(pathSegments, 1, pathSegments.length));
+
+
         boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
         if (!found) {
             minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
@@ -68,11 +79,15 @@ public class FileStorageImpl implements FileStorage {
         }
 
         String storeFileName = generateRandomName(file.getSuffix());
+        // 构建完整对象键（路径 + 文件名）
+        String fullObjectName = objectPath.isEmpty() ? storeFileName : objectPath + "/" + storeFileName;
+
+
         // 上传文件
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)
-                        .object(storeFileName)     // 对象名
+                        .object(fullObjectName)     // 对象名
                         .stream( file.getInputStream(),file.getSize(),-1 )
                         .contentType(file.getContentType())
                         .build()
@@ -82,7 +97,7 @@ public class FileStorageImpl implements FileStorage {
         return new OssFileAttachment()
                 .setGuid(new FileGuid(guid))
                 .setName(file.getFileName())
-                .setPath(bucketName + File.separator + storeFileName);
+                .setPath(bucketName + File.separator + fullObjectName);
     }
 
 }
