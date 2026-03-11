@@ -25,6 +25,7 @@ public interface BaseSecurityConfig {
 
 
     List<String> ignoreUrls = Arrays.asList("/",
+            "/error/**",
             "/tool/**",
             "/favicon.ico",
             "/login.html",
@@ -37,8 +38,6 @@ public interface BaseSecurityConfig {
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
-            "/webjars/**",
-            // 用户外部系统申请token
-            "/token/**");
+            "/webjars/**");
 
 }

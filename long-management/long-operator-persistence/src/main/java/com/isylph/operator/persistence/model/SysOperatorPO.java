@@ -45,7 +45,7 @@ public class SysOperatorPO implements Serializable {
     private LocalDateTime updateTime;
 
 
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     private Long orgId;
     /**
      * 账号
@@ -93,10 +93,10 @@ public class SysOperatorPO implements Serializable {
 
     private String remark;
 
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     private String orgCode;
 
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     private String permissionCode;
 
     /**

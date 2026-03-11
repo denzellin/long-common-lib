@@ -43,11 +43,7 @@ public class UrlAuthCollection {
     }
 
     public List<ConfigAttribute> getAuth(String httpMethod, String url){
-        int s = url.indexOf("?");
-        // 请求URL如果带参数，会导致匹配错误
-        if( s >= 0){
-            url = url.substring(0, s);
-        }
+
         for(Map.Entry<String,Map<String, String>> entry: urlAuthMaps.entrySet()){
             if(antPathMatcher.match(entry.getKey(),url)){
                 Map<String, String> auth = entry.getValue();
@@ -62,7 +58,11 @@ public class UrlAuthCollection {
                 }*/
             }
         }
-        return SecurityConfig.createListFromCommaDelimitedString(RestApiUrlService.ADMIN_ROLE);
+
+        return ADMIN_ROLE_CONFIG;
     }
+
+    private static final List<ConfigAttribute> ADMIN_ROLE_CONFIG =
+            SecurityConfig.createListFromCommaDelimitedString(RestApiUrlService.ADMIN_ROLE);
 
 }

@@ -2,20 +2,18 @@ package com.isylph.security.configuration;
 
 
 import com.isylph.basis.security.BaseSecurityConfig;
-import com.isylph.security.jwt.JWTAuthenticationProvider;
 import com.isylph.security.jwt.JWTAuthenticationFilter;
+import com.isylph.security.jwt.JWTAuthenticationProvider;
 import com.isylph.security.jwt.JWTUserPasswordAuthenticationFilter;
 import com.isylph.security.jwt.UserTokenAssemblerService;
 import com.isylph.security.service.LongUserDetailsService;
 import com.isylph.security.service.RestApiUrlService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,20 +21,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig implements BaseSecurityConfig {
@@ -53,60 +49,28 @@ public class WebSecurityConfig implements BaseSecurityConfig {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    @Autowired
+    private IgnoreUrlConfig ignoreUrlConfig;
+
+    @Autowired
+    private DynamicAuthorizationManager authorizationManager;
 
     private final List<String> finalIgnoredUrls = new ArrayList<>(ignoreUrls);
-
-    public void addIgnoredUrl(String url){
-        if (finalIgnoredUrls.contains(url)){
-            return;
-        }
-        finalIgnoredUrls.add(url);
-    }
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+        finalIgnoredUrls.addAll(ignoreUrlConfig.getUrlList());
+        String[] array = finalIgnoredUrls.toArray(new String[0]);
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(register -> register.anyRequest().access((authentication, object) -> {
-                    //获取当前请求的 URL 地址
-                    String requestURI = object.getRequest().getRequestURI();
-                    AtomicBoolean ignored = new AtomicBoolean(false);
-                    finalIgnoredUrls.forEach(url-> {
-                        if (antPathMatcher.match(url, requestURI)){
-                            ignored.set(true);
-                        }
-                    });
-                    if (ignored.get() ) {
-                        return new AuthorizationDecision(true);
-                    }
-
-                    if (authentication.get() instanceof AnonymousAuthenticationToken) {
-                        return new AuthorizationDecision(false);
-                    }
-
-                    String method = object.getRequest().getMethod();
-                    if (antPathMatcher.match("/common/**", requestURI) || antPathMatcher.match("/tool/**", requestURI) ){
-                        return new AuthorizationDecision(true);
-                    }
-                    List<ConfigAttribute> cs = restApiUrlService.getAuth(method, requestURI);
-                    Collection<? extends GrantedAuthority> authorities = authentication.get().getAuthorities();
-                    for (GrantedAuthority authority : authorities) {
-                        for (ConfigAttribute role : cs) {
-                            if (authority.getAuthority().equals(role.getAttribute())) {
-                                //说明当前登录用户具备当前请求所需要的角色
-                                return new AuthorizationDecision(true);
-                            }
-                        }
-                    }
-                    return new AuthorizationDecision(false);
-                }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JWTAuthenticationFilter(userTokenAssemblerService, longUserDetailsService), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new JWTUserPasswordAuthenticationFilter(authenticationManager, userTokenAssemblerService))
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(array).permitAll()
+                        .anyRequest().access(authorizationManager))
+                .addFilterBefore(new JWTAuthenticationFilter(userTokenAssemblerService, longUserDetailsService), AuthorizationFilter.class)
+                .addFilterAt(new JWTUserPasswordAuthenticationFilter(authenticationManager, userTokenAssemblerService), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(Customizer.withDefaults())
                 .httpBasic(HttpBasicConfigurer::disable)
                 .logout(logout->{

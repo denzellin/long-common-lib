@@ -2,12 +2,11 @@ package com.isylph.basis.security;
 
 
 import com.isylph.basis.jwt.BaseJwtTokenService;
-import com.isylph.basis.jwt.JwtTokenService;
 import com.isylph.basis.jwt.entities.BaseJwtUser;
 import com.isylph.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -36,7 +35,7 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
     default UsernamePasswordAuthenticationToken getAuthentication(String token){
 
         if (StringUtils.isEmpty(token)){
-            return null;
+            return new UsernamePasswordAuthenticationToken("anonymousUser", null, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
         }
 
         S jwtService = getJwtService();
@@ -51,7 +50,7 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
 
         }
         if (memberVo == null){
-            return null;
+            return new UsernamePasswordAuthenticationToken("anonymousUser", null, AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
         }
         List<String> roles = getJwtService().getUserRole(token);
         return createAuthenticationToken(memberVo,memberVo, roles);
@@ -83,9 +82,10 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
         String tokenHeader = jwtService.getHeaderToken(request);
         String appId = jwtService.getHeaderAppId(request);
         String secretKey = jwtService.getHeaderSecret(request);
-
+        System.out.println("get token " + tokenHeader + " app-id: " + appId + " secret: "+secretKey);
         // 如果请求头中没有Authorization信息则直接放行了
         if (tokenHeader != null ){
+            System.out.println("get token "+tokenHeader);
             UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(tokenHeader);
             if ( authenticationToken == null ) {
                 return null;
@@ -97,7 +97,9 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
 
         } else if (!StringUtils.isEmpty(appId) && !StringUtils.isEmpty(secretKey)){
 
+            System.out.println("get App id " + appId + "secret "+ secretKey);
             if (!checkAppSecret(appId, secretKey)){
+                System.out.println("failed to check app id and key");
                 return null;
             }
 

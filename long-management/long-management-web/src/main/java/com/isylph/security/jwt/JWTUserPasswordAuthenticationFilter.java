@@ -27,6 +27,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Security中处理用户登录
+ */
+
 @Slf4j
 public class JWTUserPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

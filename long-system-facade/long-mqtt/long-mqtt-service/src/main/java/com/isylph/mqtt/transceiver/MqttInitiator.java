@@ -1,7 +1,6 @@
 package com.isylph.mqtt.transceiver;
 
 import com.isylph.mqtt.manage.config.MqttConfigManager;
-import com.isylph.utils.StringUtils;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +17,6 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.util.CollectionUtils;
-
-import java.sql.Array;
 
 @EnableIntegrationManagement(defaultLoggingEnabled = "${mqtt.logging: false}")
 @Configuration
