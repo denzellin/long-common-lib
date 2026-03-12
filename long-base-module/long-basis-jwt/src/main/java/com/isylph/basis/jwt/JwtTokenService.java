@@ -25,7 +25,7 @@ public interface JwtTokenService<T extends BaseUser> {
     String HEAD_SECRET_KEY = "secret-key";
     String HEAD_USER_ID = "user-id";
     String HEAD_USER_NAME = "user-name";
-    String HEAD_NAME = "name";
+    String HEAD_NAME = "x-name";
     String HEAD_USER_TYPE = "user-type";
 
     String ROLE_CLAIMS = "user_role";
