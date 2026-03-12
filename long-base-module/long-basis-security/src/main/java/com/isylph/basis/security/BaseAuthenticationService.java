@@ -82,10 +82,8 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
         String tokenHeader = jwtService.getHeaderToken(request);
         String appId = jwtService.getHeaderAppId(request);
         String secretKey = jwtService.getHeaderSecret(request);
-        System.out.println("get token " + tokenHeader + " app-id: " + appId + " secret: "+secretKey);
         // 如果请求头中没有Authorization信息则直接放行了
         if (tokenHeader != null ){
-            System.out.println("get token "+tokenHeader);
             UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(tokenHeader);
             if ( authenticationToken == null ) {
                 return null;
@@ -97,7 +95,6 @@ public interface BaseAuthenticationService<T extends BaseJwtUser, S extends Base
 
         } else if (!StringUtils.isEmpty(appId) && !StringUtils.isEmpty(secretKey)){
 
-            System.out.println("get App id " + appId + "secret "+ secretKey);
             if (!checkAppSecret(appId, secretKey)){
                 System.out.println("failed to check app id and key");
                 return null;
