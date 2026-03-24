@@ -55,7 +55,7 @@
         <!-- other -->
         <json_lib_version>2.4</json_lib_version>
         <dom4j_version>1.6.1</dom4j_version>
-        <aspectj.version>1.9.1</aspectj.version>
+        <aspectj.version>1.9.21</aspectj.version>
         <jedis.version>2.9.0</jedis.version>
         <fst.version>2.57</fst.version>
         <alipay.version>3.6.0.ALL</alipay.version>
