@@ -23,8 +23,7 @@ public class AdvancedChineseSentenceSplitter {
             "|\"[^\"]*\"" +  // 匹配引号内的内容
             "|[。！？…~～](\\s*\\p{So}+\\s*)?" +  // 匹配结束符和emoji
             "(?![^()]*\\)[^()]*[。！？…~～])" +  // 排除括号内的结束符
-            "(?![^\"]*\"[^\" ]*[。！？…~～][^\" ]*\")";  // 排除引号内的结束符
-
+            "(?![^\"]*\"[^\" ]*[。！？…~～][^\" ]*\")|\\R";  // 排除引号内的结束符
 
     public static List<String> split(String paragraph) {
         List<String> sentences = new ArrayList<>();
