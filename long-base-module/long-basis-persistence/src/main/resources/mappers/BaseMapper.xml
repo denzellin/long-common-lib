@@ -15,6 +15,15 @@
         </if>
     </sql>
 
+    <sql id="PG_Base_Pagination_Filter">
+        <if test="cnt != null">
+            limit #{cnt}
+        </if>
+        <if test="offset != null">
+            offset #{offset},
+        </if>
+
+    </sql>
 
 
     <!--
