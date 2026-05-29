@@ -20,7 +20,7 @@
             limit #{cnt}
         </if>
         <if test="offset != null">
-            offset #{offset},
+            offset #{offset}
         </if>
 
     </sql>
