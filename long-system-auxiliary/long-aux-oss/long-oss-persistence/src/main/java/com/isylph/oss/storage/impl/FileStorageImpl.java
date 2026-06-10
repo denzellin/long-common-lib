@@ -1,7 +1,6 @@
 package com.isylph.oss.storage.impl;
 
 import com.isylph.basis.controller.exception.ReturnException;
-import com.isylph.basis.types.FileData;
 import com.isylph.oss.api.consts.Errors;
 import com.isylph.oss.domain.entity.GeneralFile;
 import com.isylph.oss.domain.entity.OssFileAttachment;
@@ -24,7 +23,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 @Slf4j
 @Repository("fileStorageLocal")
@@ -39,14 +37,11 @@ public class FileStorageImpl implements FileStorage {
 
     private String getLocalFileName(String module,
                                     String suffixName){
+        String modulePath = module;
         OssFileLocation loc =ossRepository.findOssFileLocation(new Module(module));
-        if (loc == null){
-            throw new ReturnException(Errors.LOCATION_CFG_NO_EXIST);
+        if (loc != null){
+            modulePath = StringUtils.isNotEmpty(loc.getLocation()) ? loc.getLocation() : "default";
         }
-
-        String modulePath = loc.getLocation();
-
-        modulePath = StringUtils.isNotEmpty(modulePath) ? modulePath : "default";
 
         return modulePath + "/" + generateRandomName(suffixName);
     }
