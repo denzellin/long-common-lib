@@ -2,7 +2,6 @@ package com.isylph.oss.application;
 
 import com.isylph.basis.base.RetPage;
 import com.isylph.basis.types.FileData;
-import com.isylph.oss.api.entity.OssFileInfoVO;
 import com.isylph.oss.api.entity.OssFileLocationDTO;
 import com.isylph.oss.api.entity.OssFileLocationQuery;
 import com.isylph.oss.api.entity.OssFileLocationSaveCmd;
@@ -32,9 +31,12 @@ public interface OssApplicationService {
 
     FileData saveGeneralFile(String module, String fileName, InputStream fileStream, long size, String contentType);
 
+    @Deprecated
     String readTextFromFile(String path);
 
     FileData getFileInfo( String guid);
+
+    InputStream readFile(String guid);
 
     List<FileData> getFileInfo(List<String> guids);
 }

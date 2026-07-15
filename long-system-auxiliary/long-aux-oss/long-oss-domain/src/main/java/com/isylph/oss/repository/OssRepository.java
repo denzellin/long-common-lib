@@ -40,6 +40,8 @@ public interface OssRepository {
 
     FileData getFile(FileGuid guid);
 
+    OssFileAttachment getFileInfo(FileGuid guid);
+
     List<FileData> getFile(List<FileGuid> guids);
 
 

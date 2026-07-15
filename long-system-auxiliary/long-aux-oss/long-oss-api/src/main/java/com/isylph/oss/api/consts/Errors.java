@@ -24,4 +24,7 @@ public class Errors extends BaseErrorConsts{
 
     @ErrorItem("文件存储配置无效")
     public static final long LOCATION_CFG_NO_EXIST = define(BASE);
+
+    @ErrorItem("文件不存在")
+    public static final long FILE_NOT_EXIST = define(BASE);
 }

@@ -2,24 +2,30 @@ package com.isylph.oss.external.impl;
 
 
 
-import com.isylph.oss.domain.types.FileGuid;
-import com.isylph.oss.domain.types.RandomGUID;
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.PutObjectArgs;
-import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import com.isylph.oss.domain.entity.GeneralFile;
-import com.isylph.oss.domain.entity.OssFileAttachment;
-import com.isylph.oss.storage.FileStorage;
-import io.minio.MinioClient;
-import jakarta.annotation.PostConstruct;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
+import com.isylph.basis.controller.exception.ReturnException;
+import com.isylph.oss.api.consts.Errors;
+import com.isylph.oss.domain.entity.GeneralFile;
+import com.isylph.oss.domain.entity.OssFileAttachment;
+import com.isylph.oss.domain.types.FileGuid;
+import com.isylph.oss.domain.types.RandomGUID;
+import com.isylph.oss.storage.FileStorage;
+
+import io.minio.BucketExistsArgs;
+import io.minio.GetObjectArgs;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
 
 @Slf4j
 @Repository("fileStorageMinio")
@@ -100,5 +106,31 @@ public class FileStorageImpl implements FileStorage {
                 .setPath(bucketName + File.separator + fullObjectName);
     }
 
+    @Override
+    public InputStream readFile(OssFileAttachment file) {
+        String path = file.getPath();
+        int separatorIndex = path.indexOf('/');
+        int windowsSeparatorIndex = path.indexOf('\\');
+        if (separatorIndex < 0 || (windowsSeparatorIndex >= 0 && windowsSeparatorIndex < separatorIndex)) {
+            separatorIndex = windowsSeparatorIndex;
+        }
+        if (separatorIndex <= 0 || separatorIndex == path.length() - 1) {
+            throw new ReturnException(Errors.FILE_NOT_EXIST);
+        }
+
+        String bucketName = path.substring(0, separatorIndex);
+        String objectName = path.substring(separatorIndex + 1).replace('\\', '/');
+        try {
+            return minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .build()
+            );
+        } catch (Exception e) {
+            log.error("Failed to read file from MinIO", e);
+            throw new ReturnException(Errors.FILE_NOT_EXIST);
+        }
+    }
 }
 

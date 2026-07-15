@@ -91,4 +91,16 @@ public class FileStorageImpl implements FileStorage {
         }
         return str;
     }
+
+    @Override
+    public InputStream readFile(OssFileAttachment file) {
+        String localFilePath = fileServerManager.getLocalDir() + file.getPath();
+        try{
+            File targetFile = new File(localFilePath);
+            return new FileInputStream(targetFile);
+        }catch (IOException e) {
+            log.error("Failed to read file", e);
+            throw new ReturnException(Errors.FILE_NOT_EXIST);
+        }
+    }
 }

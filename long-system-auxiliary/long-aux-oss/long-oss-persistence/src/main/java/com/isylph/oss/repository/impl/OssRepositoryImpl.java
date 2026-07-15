@@ -142,6 +142,15 @@ public class OssRepositoryImpl implements OssRepository {
     }
 
     @Override
+    public OssFileAttachment getFileInfo(FileGuid guid) {
+        OssFileAttachmentPO po = ossFileAttachmentMapper.getByGuid(guid.getGuid());
+        if (po == null){
+            return null;
+        }
+        return ossBuilder.toOssFileAttachment(po);
+    }
+
+    @Override
     public List<FileData> getFile(List<FileGuid> guids) {
         if (CollectionUtils.isEmpty(guids)){
             return new ArrayList<>();

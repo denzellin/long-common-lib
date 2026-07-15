@@ -165,6 +165,12 @@ public class OssApplicationServiceImpl implements OssApplicationService {
     }
 
     @Override
+    public InputStream readFile(String guid) {
+        OssFileAttachment file = ossRepository.getFileInfo(new FileGuid(guid));
+        return fileStorage.readFile(file);
+    }
+
+    @Override
     public List<FileData> getFileInfo(List<String> guids) {
         if (CollectionUtils.isEmpty(guids)){
             return null;
