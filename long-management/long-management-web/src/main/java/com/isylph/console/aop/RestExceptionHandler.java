@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +28,7 @@ public class RestExceptionHandler extends RestExceptionBaseHandler {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    protected  <T> HttpRetData<T> authenticationExceptionHandler(Exception e, HttpServletRequest request) {
+    protected  HttpRetData<?> authenticationExceptionHandler(Exception e, HttpServletRequest request) {
         log.warn("Exception: {}", e.getMessage());
         return HttpRetData.error(403L, e.getMessage());
     }
@@ -37,8 +36,8 @@ public class RestExceptionHandler extends RestExceptionBaseHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
-    protected  <T> HttpRetData<T> generalExceptionHandler(Exception e, HttpServletRequest request) {
-        log.warn("Exception: {}", e.getMessage());
+    protected  HttpRetData<?> generalExceptionHandler(Exception e, HttpServletRequest request) {
+        log.error("Exception", e);
         return HttpRetData.error(422L, e.getMessage());
     }
 
