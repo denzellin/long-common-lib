@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>long-aux-oss</artifactId>
-        <groupId>com.isylph</groupId>
+        <groupId>com.vivavot</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -23,12 +23,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-oss-application</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-basis-controller</artifactId>
             <version>${def_version}</version>
         </dependency>
@@ -40,7 +40,7 @@
         <!-- 阿里云对象存储 -->
 
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-aux-uid-service</artifactId>
             <version>${def_version}</version>
         </dependency>

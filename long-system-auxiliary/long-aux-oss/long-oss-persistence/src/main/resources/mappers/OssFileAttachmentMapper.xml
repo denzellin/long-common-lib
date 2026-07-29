@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isylph.oss.persistence.dao.OssFileAttachmentMapper">
+<mapper namespace="com.vivavot.oss.persistence.dao.OssFileAttachmentMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.isylph.oss.persistence.model.OssFileAttachmentPO">
+    <resultMap id="BaseResultMap" type="com.vivavot.oss.persistence.model.OssFileAttachmentPO">
         <id column="id" property="id" />
         <result column="gmt_create" property="gmtCreate" />
         <result column="gmt_modified" property="gmtModified" />

@@ -1,0 +1,41 @@
+package com.vivavot.oss.domain.entity;
+
+import com.vivavot.basis.controller.exception.ReturnException;
+import com.vivavot.oss.api.consts.Errors;
+import com.vivavot.oss.domain.service.OssFileService;
+import com.vivavot.oss.domain.types.Module;
+import lombok.Getter;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+@Getter
+public class PdfFile extends GeneralFile {
+    private PdfFile(String fileName, Module module, String suffix, ByteArrayInputStream inputStream, Long size, String contentType) {
+        super(fileName, module, suffix, inputStream, size, contentType);
+    }
+
+    public static PdfFile create(String module, String fileName, InputStream fileStream, Long size, String contentType, OssFileService ossFileService){
+
+        //通过文件头魔术值校验文件格式
+        ByteArrayOutputStream byteArrayOutputStream = ossFileService.inputStreamCache(fileStream);
+        byte[] ar = byteArrayOutputStream.toByteArray();
+        if (ar.length < 5){
+            throw new ReturnException(Errors.UPLOAD_INVALID_FORMAT);
+        }
+        if (!(ar[0] == 0x25 && // %
+                ar[1] == 0x50 && // P
+                ar[2] == 0x44 && // D
+                ar[3] == 0x46 && // F
+                ar[4] == 0x2D)){
+
+            throw new ReturnException(Errors.UPLOAD_INVALID_FORMAT);
+        }
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(ar);
+
+        return new PdfFile(fileName, new Module(module), "pdf", inputStream, size, contentType);
+    }
+
+}

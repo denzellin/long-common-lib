@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>long-management</artifactId>
-        <groupId>com.isylph</groupId>
+        <groupId>com.vivavot</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>long-management-service</artifactId>
@@ -13,37 +13,37 @@
     <name>long-management-service</name>
     <dependencies>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-management-api</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-operator-application</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-basis-web-quickstart</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-util-spring</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-util-json</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-aux-uid-service</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-util-encryption</artifactId>
             <version>${def_version}</version>
         </dependency>

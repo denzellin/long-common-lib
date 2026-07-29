@@ -1,0 +1,106 @@
+package com.vivavot.oss.storage.impl;
+
+import com.vivavot.basis.controller.exception.ReturnException;
+import com.vivavot.oss.api.consts.Errors;
+import com.vivavot.oss.domain.entity.GeneralFile;
+import com.vivavot.oss.domain.entity.OssFileAttachment;
+import com.vivavot.oss.domain.entity.OssFileLocation;
+import com.vivavot.oss.domain.types.FileGuid;
+import com.vivavot.oss.domain.types.Module;
+import com.vivavot.oss.domain.types.RandomGUID;
+import com.vivavot.oss.persistence.conf.FileServerManager;
+import com.vivavot.oss.repository.OssRepository;
+import com.vivavot.oss.storage.FileStorage;
+import com.vivavot.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+@Slf4j
+@Repository("fileStorageLocal")
+public class FileStorageImpl implements FileStorage {
+
+    @Autowired
+    private OssRepository ossRepository;
+
+    @Autowired
+    private FileServerManager fileServerManager;
+
+
+    private String getLocalFileName(String module,
+                                    String suffixName){
+        String modulePath = module;
+        OssFileLocation loc =ossRepository.findOssFileLocation(new Module(module));
+        if (loc != null){
+            modulePath = StringUtils.isNotEmpty(loc.getLocation()) ? loc.getLocation() : "default";
+        }
+
+        return modulePath + "/" + generateRandomName(suffixName);
+    }
+
+
+    @Override
+    public <T extends GeneralFile> OssFileAttachment saveFile(T file)  throws Exception{
+
+        String abstractPath = getLocalFileName(file.getModule().getModule(), file.getSuffix());
+        String localFilePath = fileServerManager.getLocalDir() + abstractPath;
+        File targetFile = new File(localFilePath);
+
+        // 检测是否存在目录
+        if (!targetFile.getParentFile().exists()) {
+            targetFile.getParentFile().mkdirs();
+        }
+
+        log.info("保存至本地路径：{}", localFilePath);
+
+        try {
+            FileUtils.copyInputStreamToFile(file.getInputStream(), targetFile);
+        } catch (IOException e) {
+            log.error("保存文件至本地失败", e);
+            targetFile.deleteOnExit();
+            throw new ReturnException(Errors.UPLOAD_SAVE_FILE_FAIL);
+        }
+
+        String guid = new RandomGUID().toString();
+        return new OssFileAttachment()
+                .setGuid(new FileGuid(guid))
+                .setName(file.getFileName())
+                .setPath(abstractPath);
+    }
+
+    @Override
+    public String readTextFile(String path) {
+
+        String localFilePath = fileServerManager.getLocalDir() + path;
+        File targetFile = new File(localFilePath);
+        String str;
+        try (InputStream inputStream = new FileInputStream(targetFile)) {
+            str = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            log.error("从本地读取文件失败", e);
+            targetFile.deleteOnExit();
+            throw new ReturnException(Errors.UPLOAD_SAVE_FILE_FAIL);
+        }
+        return str;
+    }
+
+    @Override
+    public InputStream readFile(OssFileAttachment file) {
+        String localFilePath = fileServerManager.getLocalDir() + file.getPath();
+        try{
+            File targetFile = new File(localFilePath);
+            return new FileInputStream(targetFile);
+        }catch (IOException e) {
+            log.error("Failed to read file", e);
+            throw new ReturnException(Errors.FILE_NOT_EXIST);
+        }
+    }
+}

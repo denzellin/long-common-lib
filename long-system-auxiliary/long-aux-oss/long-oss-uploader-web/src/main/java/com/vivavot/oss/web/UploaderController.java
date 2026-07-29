@@ -1,0 +1,49 @@
+package com.vivavot.oss.web;
+
+
+import com.vivavot.basis.beans.HttpRetData;
+import com.vivavot.basis.controller.exception.ReturnException;
+import com.vivavot.basis.types.FileData;
+import com.vivavot.oss.api.consts.Errors;
+import com.vivavot.oss.application.OssApplicationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Objects;
+
+@Tag(name = "系统功能", description = "100")
+@RestController()
+@RequestMapping("/upload")
+public class UploaderController {
+
+    @Autowired
+    private OssApplicationService ossApplicationService;
+
+    @Operation(summary = "上传图片，按模块分组", method = "/*", operationId = "001")
+    @PostMapping(value = "/{module}/{format}")
+    public HttpRetData uploadImage(@Parameter(description = "通过指定模块来设置文件保存的目录") @PathVariable String module,
+                                   @Parameter(description = "上传图片时为img, 上传PDF文件时是pdf, 其他格式时随意") @PathVariable String format,
+                                   @RequestParam(value = "file") MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            throw new ReturnException(Errors.UPLOAD_FILE_MUST_NOT_EMPTY);
+        }
+        FileData f = null;
+        if (Objects.equals(format, "img")){
+            f = ossApplicationService.saveImage(module, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
+        }else if (Objects.equals(format, "pdf")){
+            f = ossApplicationService.savePdf(module, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
+        }else{
+            f = ossApplicationService.saveGeneralFile(module, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
+        }
+
+        return HttpRetData.success(f);
+    }
+}

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isylph.console.settings.dao.SysFuncGroupMapper">
+<mapper namespace="com.vivavot.console.settings.dao.SysFuncGroupMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.isylph.console.settings.model.SysFuncGroupPO">
+    <resultMap id="BaseResultMap" type="com.vivavot.console.settings.model.SysFuncGroupPO">
         <id column="id" property="id" />
         <result column="name" property="name" />
     </resultMap>
 
-    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.func.SysFuncGroupVO">
+    <resultMap id="VoResultMap" type="com.vivavot.console.api.beans.system.func.SysFuncGroupVO">
         <id column="id" property="id" />
         <result column="name" property="name" />
     </resultMap>

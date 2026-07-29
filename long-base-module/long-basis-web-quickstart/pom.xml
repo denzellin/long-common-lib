@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>long-base-module</artifactId>
-    <groupId>com.isylph</groupId>
+    <groupId>com.vivavot</groupId>
     <version>0.0.5-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -18,23 +18,23 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>com.isylph</groupId>
+      <groupId>com.vivavot</groupId>
       <artifactId>long-basis-controller</artifactId>
       <version>${def_version}</version>
     </dependency>
     <dependency>
-      <groupId>com.isylph</groupId>
+      <groupId>com.vivavot</groupId>
       <artifactId>long-basis-error</artifactId>
       <version>${def_version}</version>
     </dependency>
     <dependency>
-      <groupId>com.isylph</groupId>
+      <groupId>com.vivavot</groupId>
       <artifactId>long-basis-persistence</artifactId>
       <version>${def_version}</version>
     </dependency>
 
     <dependency>
-      <groupId>com.isylph</groupId>
+      <groupId>com.vivavot</groupId>
       <artifactId>long-util-common</artifactId>
       <version>${def_version}</version>
     </dependency>

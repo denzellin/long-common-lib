@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isylph.error.dao.AuxErrorMessageMapper">
+<mapper namespace="com.vivavot.error.dao.AuxErrorMessageMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.isylph.error.model.AuxErrorMessagePO">
+    <resultMap id="BaseResultMap" type="com.vivavot.error.model.AuxErrorMessagePO">
         <id column="id" property="id" />
         <result column="module" property="module" />
         <result column="key" property="key" />

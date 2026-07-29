@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>long-management</artifactId>
-        <groupId>com.isylph</groupId>
+        <groupId>com.vivavot</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>long-management-web</artifactId>
@@ -14,43 +14,43 @@
     <dependencies>
         <!-- 工程内依赖 -->
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-department-application</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-operator-application</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-management-service</artifactId>
             <version>${def_version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-aux-error-service</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-util-json</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-util-http</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-basis-web-quickstart</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-basis-security</artifactId>
             <version>${def_version}</version>
         </dependency>

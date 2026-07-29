@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>long-system-facade</artifactId>
-        <groupId>com.isylph</groupId>
+        <groupId>com.vivavot</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>long-notification</artifactId>

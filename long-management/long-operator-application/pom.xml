@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>long-management</artifactId>
-        <groupId>com.isylph</groupId>
+        <groupId>com.vivavot</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -18,32 +18,32 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-operator-api</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-operator-domain</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-operator-persistence</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-operator-external</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-basis-application</artifactId>
             <version>${def_version}</version>
         </dependency>
         <dependency>
-            <groupId>com.isylph</groupId>
+            <groupId>com.vivavot</groupId>
             <artifactId>long-util-common</artifactId>
             <version>${def_version}</version>
         </dependency>

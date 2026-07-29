@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isylph.console.settings.dao.SysFuncMapper">
+<mapper namespace="com.vivavot.console.settings.dao.SysFuncMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.func.SysFuncVO">
+    <resultMap id="VoResultMap" type="com.vivavot.console.api.beans.system.func.SysFuncVO">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="active" property="active" />

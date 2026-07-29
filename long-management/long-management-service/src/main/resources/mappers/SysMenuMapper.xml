@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isylph.console.settings.dao.SysMenuMapper">
+<mapper namespace="com.vivavot.console.settings.dao.SysMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.isylph.console.settings.model.SysMenuPO">
+    <resultMap id="BaseResultMap" type="com.vivavot.console.settings.model.SysMenuPO">
         <id column="id" property="id" />
         <result column="fid" property="fid" />
         <result column="code" property="code" />
@@ -22,7 +22,7 @@
     </resultMap>
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.menu.SysMenuVO">
+    <resultMap id="VoResultMap" type="com.vivavot.console.api.beans.system.menu.SysMenuVO">
         <id column="id" property="id" />
         <result column="fid" property="fid" />
         <result column="code" property="code" />

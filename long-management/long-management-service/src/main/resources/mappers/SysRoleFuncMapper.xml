@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.isylph.console.settings.dao.SysRoleFuncMapper">
+<mapper namespace="com.vivavot.console.settings.dao.SysRoleFuncMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="VoResultMap" type="com.isylph.console.api.beans.system.role.SysRoleFuncVO">
+    <resultMap id="VoResultMap" type="com.vivavot.console.api.beans.system.role.SysRoleFuncVO">
         <id column="id" property="id" />
         <result column="role_id" property="roleId" />
         <result column="func_id" property="funcId" />
     </resultMap>
-    <resultMap id="RoleFuncVoResultMap" type="com.isylph.console.api.beans.system.func.SysFuncVO">
+    <resultMap id="RoleFuncVoResultMap" type="com.vivavot.console.api.beans.system.func.SysFuncVO">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="active" property="active" />
@@ -17,7 +17,7 @@
         <result column="method" property="method" />
     </resultMap>
 
-    <resultMap id="RolesResultMap" type="com.isylph.console.api.beans.system.role.SysRoleVO">
+    <resultMap id="RolesResultMap" type="com.vivavot.console.api.beans.system.role.SysRoleVO">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="role" property="role" />
