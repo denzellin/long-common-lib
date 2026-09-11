@@ -231,7 +231,7 @@ public class Tree extends BaseVO {
 
                 subs.add(item);
             } else {
-                log.error("Failed to get father node: {}", item);
+                log.debug("Failed to get father node: {}", item);
             }
         }
 
