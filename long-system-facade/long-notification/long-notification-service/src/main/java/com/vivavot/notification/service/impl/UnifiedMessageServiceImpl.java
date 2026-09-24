@@ -38,7 +38,7 @@ public class UnifiedMessageServiceImpl implements UnifiedMessageService {
     @Autowired
     private AliSmsClient smsClient;
 
-    @Autowired
+    @Autowired(required = false)
     private JavaMailSender mailSender;
 
     @Value("${spring.mail.username:}")
@@ -65,7 +65,7 @@ public class UnifiedMessageServiceImpl implements UnifiedMessageService {
 
     @Override
     public void sendSimpleMailMessage(List<String> recipients, String subject, String text) {
-        if (CollectionUtils.isEmpty(recipients)){
+        if (CollectionUtils.isEmpty(recipients) || mailSender == null) {
             return;
         }
         SimpleMailMessage message = new SimpleMailMessage();
