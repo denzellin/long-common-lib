@@ -8,6 +8,7 @@ import com.vivavot.utils.encryption.PasswordUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,8 +21,7 @@ import java.util.List;
  * @author denzel.lin
  * @since 2021-08-19
  */
-
-
+@Slf4j
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
@@ -40,7 +40,7 @@ public class SysOperator {
     private LocalDateTime updateTime;
 
 
-    private SysDepartment org;
+    private SysDepartment organization;
     /**
      * 账号
      */
@@ -91,6 +91,8 @@ public class SysOperator {
     public Boolean login(String password){
         String pwd = PasswordUtils.encryptPassword(password, this.salt).toUpperCase();
         if (!pwd.equals(this.password)){
+            log.info("Failed to check password");
+            log.debug("Input: {}, check:{}, password: {}", password, pwd, this.password);
             //log.info("Incorrect password: {}", account);
             throw new ReturnException(BaseErrorConsts.RET_ERROR);
         }
@@ -111,7 +113,7 @@ public class SysOperator {
     }
 
     public SysOperator setOrg(SysDepartment org){
-        this.org = org;
+        this.organization = org;
         if(org == null){
             return this;
         }
@@ -133,8 +135,8 @@ public class SysOperator {
     }
     private void copy(SysOperator so){
 
-        if (so.org != null){
-            setOrg(so.getOrg());
+        if (so.organization != null){
+            setOrg(so.getOrganization());
         }
 
         if(!StringUtils.isEmpty(so.account)){

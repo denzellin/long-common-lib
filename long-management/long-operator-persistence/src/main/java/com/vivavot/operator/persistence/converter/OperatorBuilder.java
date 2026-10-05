@@ -16,8 +16,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OperatorBuilder {
 
-    @Mapping(target = "orgId", source = "org.id")
-    @Mapping(target = "orgCode", source = "org.code")
+    @Mapping(target = "orgId", source = "organization.id")
+    @Mapping(target = "orgCode", source = "organization.code")
     SysOperatorPO toSysOperatorPO(SysOperator src);
 
     SysOperator toSysOperator(SysOperatorPO src);

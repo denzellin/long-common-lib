@@ -46,6 +46,7 @@ public class OperatorApplicationServiceImpl implements OperatorApplicationServic
     public SysOperatorVO login(String account, String password) {
         SysOperator so = operatorRepository.findOperator(new Account(account));
         if (so == null){
+            log.info("failed to find by account: {}", account);
             return null;
         }
 
